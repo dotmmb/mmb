@@ -1,0 +1,65 @@
+#N canvas 63 22 997 688 10;
+#X obj 25 12 cnv 15 400 35 empty empty hip.mmb~ 20 12 0 14 -4160 -203904
+0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X obj 76 270 noise~;
+#X obj 183 145 hsl 128 15 0 127 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 6400 1;
+#X text 212 128 frequency;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 512 0 400 140 1;
+#X restore 481 353 graph;
+#X text 859 540 .mmb;
+#X text 469 540 See also:;
+#X obj 532 568 biquadm.mmb~;
+#X obj 622 594 filtercoeff.mmb~;
+#X obj 732 594 multimode.mmb~;
+#X obj 732 568 multimode.mmb;
+#X obj 832 568 filterplot.mmb;
+#X msg 137 251 \$1 100;
+#X obj 137 274 line~;
+#X obj 180 171 mtof;
+#X floatatom 179 191 0 0 0 0 - - -;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-filter.response 400 float 0;
+#X coords 0 1 399 -1 400 140 1;
+#X restore 480 182 graph;
+#X obj 77 514 *~ 0.2;
+#X obj 77 544 dac~;
+#X obj 134 516 spectrum.mmb~ \$0-spectrum;
+#X msg 301 515 logfreq 1 \, dbrange -25 25;
+#X obj 129 487 *~ 39;
+#X obj 301 485 loadbang;
+#X text 487 69 no arguments;
+#X obj 532 594 biquad.mmb~;
+#X msg 384 308 phase \$1;
+#X obj 384 282 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 76 322 hip.mmb~;
+#X obj 189 306 filtercoeff.mmb hip;
+#X obj 622 568 filtercoeff.mmb;
+#X text 45 48 A variant of [hip~] that has a signal-controlled cutoff.
+Like [hip~] \, the highest cutoff frequency is SR/(2pi).;
+#X text 468 49 [hip.mmb~];
+#X obj 462 568 lop.mmb~;
+#X obj 462 594 hip~;
+#X obj 189 342 filterplot.mmb \$0-filter.response;
+#X connect 2 0 28 0;
+#X connect 3 0 15 0;
+#X connect 13 0 14 0;
+#X connect 14 0 28 1;
+#X connect 15 0 16 0;
+#X connect 16 0 13 0;
+#X connect 16 0 29 0;
+#X connect 18 0 19 0;
+#X connect 18 0 19 1;
+#X connect 21 0 20 1;
+#X connect 22 0 20 0;
+#X connect 23 0 21 0;
+#X connect 26 0 35 1;
+#X connect 27 0 26 0;
+#X connect 28 0 18 0;
+#X connect 28 0 22 0;
+#X connect 29 0 35 0;

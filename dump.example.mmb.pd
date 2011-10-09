@@ -1,0 +1,47 @@
+#N canvas 143 77 1126 692 10;
+#X obj 352 140 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 528 140 save.me.mmb attack \$0;
+#X obj 352 160 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 352 180 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 352 200 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 528 160 save.me.mmb decay \$0;
+#X obj 528 180 save.me.mmb sustain \$0;
+#X obj 528 200 save.me.mmb release \$0;
+#X text 357 139 attack;
+#X text 357 159 decay;
+#X text 357 179 sustain;
+#X text 357 199 release;
+#X obj 126 27 inlet;
+#X obj 126 57 route attack decay sustain release dump;
+#X obj 228 390 my.hero.mmb \$0;
+#X msg 228 358 save;
+#X msg 228 428;
+#X obj 201 323 t b b;
+#X obj 228 464 outlet;
+#X text 398 316 this abstraction merely uses [save.me.mmb] and [my.hero.mmb]
+to collect and dump parameters out an outlet. These parameters can
+be saved and loaded in the parent patch.;
+#X connect 0 0 1 0;
+#X connect 1 0 0 0;
+#X connect 2 0 5 0;
+#X connect 3 0 6 0;
+#X connect 4 0 7 0;
+#X connect 5 0 2 0;
+#X connect 6 0 3 0;
+#X connect 7 0 4 0;
+#X connect 12 0 13 0;
+#X connect 13 0 0 0;
+#X connect 13 1 2 0;
+#X connect 13 2 3 0;
+#X connect 13 3 4 0;
+#X connect 13 4 17 0;
+#X connect 14 0 16 0;
+#X connect 15 0 14 0;
+#X connect 16 0 18 0;
+#X connect 17 0 16 0;
+#X connect 17 1 15 0;
+#X coords 0 -1 1 1 150 100 1 340 120;

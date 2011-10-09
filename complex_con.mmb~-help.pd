@@ -1,0 +1,38 @@
+#N canvas 47 22 889 487 10;
+#X obj 25 12 cnv 15 400 35 empty empty complex_con.mmb~ 20 12 0 14
+-4160 -203904 0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 812 417 .mmb;
+#X text 335 336 See also:;
+#X floatatom 119 174 5 0 0 0 - - -;
+#X floatatom 212 175 5 0 0 0 - - -;
+#X text 113 151 real;
+#X text 211 152 imaginary;
+#X obj 119 241 sig~;
+#X obj 212 241 sig~;
+#X obj 119 328 number.mmb~;
+#X obj 212 328 number.mmb~;
+#X text 487 69 no arguments;
+#X obj 407 361 complex_add.mmb;
+#X obj 407 387 complex_add.mmb~;
+#X text 123 344 real;
+#X text 213 345 imaginary;
+#X obj 517 361 complex_sub.mmb;
+#X obj 517 387 complex_sub.mmb~;
+#X obj 627 361 complex_mul.mmb;
+#X obj 627 387 complex_mul.mmb~;
+#X obj 119 278 complex_con.mmb~;
+#X text 45 48 Converts a complex number into its conjugate. The real
+and imaginary parts of the complex numbers are represented as separate
+signals.;
+#X text 468 49 [complex_con.mmb~];
+#X obj 307 361 complex_con.mmb;
+#X obj 737 361 complex_div.mmb;
+#X obj 737 387 complex_div.mmb~;
+#X connect 4 0 8 0;
+#X connect 5 0 9 0;
+#X connect 8 0 21 0;
+#X connect 9 0 21 1;
+#X connect 21 0 10 0;
+#X connect 21 1 11 0;

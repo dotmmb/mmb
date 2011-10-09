@@ -1,0 +1,25 @@
+#N canvas 61 22 836 440 10;
+#X obj 25 12 cnv 15 400 35 empty empty number.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 40 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 614 371 .mmb;
+#X obj 75 244 number.mmb~;
+#X msg 164 202 refresh \$1;
+#X floatatom 164 173 5 0 0 0 - - -;
+#X text 236 201 change the refresh rate;
+#X floatatom 130 287 8 0 0 0 - - -;
+#X obj 68 371 dac~;
+#X text 194 246 Left outlet passes signal through \, right outlet outputs
+value as a float;
+#X obj 75 152 phasor~ 0.5;
+#X text 45 48 Display the value of a signal for easy debugging.;
+#X text 459 65 arg1: <optional> Set the refresh rate in ms. (default:
+100);
+#X text 440 45 [number.mmb~ refresh];
+#X connect 3 0 8 0;
+#X connect 3 0 8 1;
+#X connect 3 1 7 0;
+#X connect 4 0 3 1;
+#X connect 5 0 4 0;
+#X connect 10 0 3 0;

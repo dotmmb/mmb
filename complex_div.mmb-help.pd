@@ -1,0 +1,53 @@
+#N canvas 57 22 889 487 10;
+#X obj 25 12 cnv 15 400 35 empty empty complex_div.mmb 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 812 417 .mmb;
+#X text 335 356 See also:;
+#X text 487 69 arg1 <optional>: real part of stored value of right
+inlet;
+#X text 487 84 arg2 <optional>: imaginary part of stored value of right
+inlet;
+#X obj 119 357 unpack f f;
+#X floatatom 117 388 5 0 0 0 - - -;
+#X floatatom 180 389 5 0 0 0 - - -;
+#X floatatom 196 280 5 0 0 0 - - -;
+#X text 234 274 single floats are assumed to be real numbers (i.e.
+their imaginary part is zero);
+#X msg 80 147 bang;
+#X obj 119 236 pack f f;
+#X floatatom 119 206 5 0 0 0 - - -;
+#X floatatom 164 207 5 0 0 0 - - -;
+#X obj 230 236 pack f f;
+#X floatatom 230 206 5 0 0 0 - - -;
+#X floatatom 275 207 5 0 0 0 - - -;
+#X text 225 182 real;
+#X text 275 183 imaginary;
+#X obj 407 361 complex_sub.mmb;
+#X obj 407 387 complex_sub.mmb~;
+#X obj 737 361 complex_con.mmb;
+#X obj 737 387 complex_con.mmb~;
+#X obj 517 361 complex_add.mmb;
+#X obj 517 387 complex_add.mmb~;
+#X obj 119 318 complex_div.mmb 2 3;
+#X text 45 48 Performs complex division. Complex numbers are represented
+as two-element lists consisting of the real part and the imaginary
+part.;
+#X text 468 49 [complex_div.mmb real imaginary];
+#X text 114 139 output output value of stored right inlet value divided
+by the stored left inlet value;
+#X obj 297 387 complex_div.mmb~;
+#X obj 627 361 complex_mul.mmb;
+#X obj 627 387 complex_mul.mmb~;
+#X connect 6 0 7 0;
+#X connect 6 1 8 0;
+#X connect 9 0 26 0;
+#X connect 11 0 26 0;
+#X connect 12 0 26 0;
+#X connect 13 0 12 0;
+#X connect 14 0 12 1;
+#X connect 15 0 26 1;
+#X connect 16 0 15 0;
+#X connect 17 0 15 1;
+#X connect 26 0 6 0;

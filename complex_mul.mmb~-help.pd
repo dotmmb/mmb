@@ -1,0 +1,48 @@
+#N canvas 63 22 889 487 10;
+#X obj 25 12 cnv 15 400 35 empty empty complex_mul.mmb~ 20 12 0 14
+-4160 -203904 0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 812 417 .mmb;
+#X text 335 336 See also:;
+#X floatatom 79 174 5 0 0 0 - - -;
+#X floatatom 124 175 5 0 0 0 - - -;
+#X floatatom 225 174 5 0 0 0 - - -;
+#X floatatom 270 175 5 0 0 0 - - -;
+#X text 73 151 real;
+#X text 123 152 imaginary;
+#X obj 627 361 complex_div.mmb;
+#X obj 627 387 complex_div.mmb~;
+#X obj 737 361 complex_con.mmb;
+#X obj 737 387 complex_con.mmb~;
+#X text 218 151 real;
+#X text 268 152 imaginary;
+#X obj 107 241 sig~;
+#X obj 147 241 sig~;
+#X obj 187 241 sig~;
+#X obj 227 241 sig~;
+#X obj 119 328 number.mmb~;
+#X obj 212 328 number.mmb~;
+#X text 487 69 no arguments;
+#X obj 407 361 complex_add.mmb;
+#X obj 407 387 complex_add.mmb~;
+#X text 123 344 real;
+#X text 213 345 imaginary;
+#X obj 119 278 complex_mul.mmb~;
+#X text 45 48 Performs complex multiplication on signals. The real
+and imaginary parts of the complex numbers are represented as separate
+signals.;
+#X text 468 49 [complex_mul.mmb~];
+#X obj 307 361 complex_mul.mmb;
+#X obj 517 361 complex_sub.mmb;
+#X obj 517 387 complex_sub.mmb~;
+#X connect 4 0 16 0;
+#X connect 5 0 17 0;
+#X connect 6 0 18 0;
+#X connect 7 0 19 0;
+#X connect 16 0 27 0;
+#X connect 17 0 27 1;
+#X connect 18 0 27 2;
+#X connect 19 0 27 3;
+#X connect 27 0 20 0;
+#X connect 27 1 21 0;

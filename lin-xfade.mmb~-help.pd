@@ -1,0 +1,45 @@
+#N canvas 63 22 597 519 10;
+#X obj 25 12 cnv 15 400 35 empty empty lin-xfade.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 60 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 483 421 .mmb;
+#X text 371 405 See also:;
+#X obj 82 429 dac~;
+#X text 459 65 no arguments;
+#X obj 364 433 xfade.mmb~;
+#X obj 93 321 lin-xfade.mmb~;
+#X obj 66 181 bl-saw.mmb~;
+#X obj 99 125 sig~ 440;
+#X obj 93 370 *~ 0.5;
+#X floatatom 268 262 5 0 0 0 - - -;
+#X obj 234 225 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X text 243 208 crossfade amount;
+#X text 440 45 [lin-xfade.mmb~];
+#X msg 235 129 0;
+#X obj 149 181 vphasor.mmb~;
+#X obj 149 233 +~ 1;
+#X obj 149 208 *~ -2;
+#X text 263 127 sync phases;
+#X obj 213 282 line~;
+#X msg 213 260 \$1 10;
+#X text 45 48 A linear crossfader between the first and second inlets.
+The third inlet controls the crossfade amount (0 = left inlet only
+\, 1 = right inlet only). Works well for signals with similar phases.
+;
+#X connect 7 0 10 0;
+#X connect 8 0 7 0;
+#X connect 9 0 8 0;
+#X connect 9 0 16 0;
+#X connect 10 0 4 0;
+#X connect 10 0 4 1;
+#X connect 12 0 11 0;
+#X connect 12 0 21 0;
+#X connect 15 0 8 1;
+#X connect 15 0 16 1;
+#X connect 16 0 18 0;
+#X connect 17 0 7 1;
+#X connect 18 0 17 0;
+#X connect 20 0 7 2;
+#X connect 21 0 20 0;

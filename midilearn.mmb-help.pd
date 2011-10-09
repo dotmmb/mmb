@@ -1,0 +1,32 @@
+#N canvas 61 22 767 473 10;
+#X obj 25 12 cnv 15 400 35 empty empty midilearn.mmb 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 40 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 614 371 .mmb;
+#X obj 62 153 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 92 153 1 - send a bang to put it in learn mode.;
+#X text 111 193 2 - send a cc message from your MIDI controller (turn
+a knob \, move a fader \, etc.). That cc number and channel will be
+learned \, and its value will now be passed through the left outlet.
+The right outlet will output the cc number and channel.;
+#X floatatom 62 387 5 0 0 0 - - -;
+#X obj 161 378 unpack f f;
+#X floatatom 161 409 5 0 0 0 - - -;
+#X floatatom 218 409 5 0 0 0 - - -;
+#X text 440 45 [midilearn.mmb ccnumber channel];
+#X text 459 65 arg1: <optional> The default controller number;
+#X text 459 79 arg2: <optional> The default MIDI channel;
+#X msg 119 289 set 74 2;
+#X obj 62 348 midilearn.mmb 1 1;
+#X text 180 281 you can also change the cc number and channel with
+the set message.;
+#X text 45 48 A way to assign MIDI controllers by simply turning a
+knob \, moving a fader \, or pressing a button.;
+#X connect 3 0 14 0;
+#X connect 7 0 8 0;
+#X connect 7 1 9 0;
+#X connect 13 0 14 0;
+#X connect 14 0 6 0;
+#X connect 14 1 7 0;

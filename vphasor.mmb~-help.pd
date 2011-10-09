@@ -1,0 +1,54 @@
+#N canvas 288 22 1117 723 10;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-phasor-graph 256 float 0;
+#X coords 0 1 255 -1 200 140 1;
+#X restore 517 208 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-vphasor-graph 256 float 0;
+#X coords 0 1 255 -1 200 140 1;
+#X restore 517 378 graph;
+#X obj 505 558 loadbang;
+#X obj 233 213 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 233 241 metro 150;
+#X msg 505 584 \; phasor-graph xticks 0 64 1 \; phasor-graph xlabel
+-1.1 0 64 128 192 256 \; vphasor-graph xticks 0 64 1 \; vphasor-graph
+xlabel -1.1 0 64 128 192 256 \;;
+#X obj 790 139 block~ 64 1;
+#X text 723 435 ...while [vphasor.mmb~] does not.;
+#X text 720 268 [phasor~] locks to block boundaries...;
+#X obj 233 270 t b b;
+#X text 249 213 turn on to see difference;
+#X text 304 301 reset phases to 0.25;
+#X msg 277 300 0.25;
+#X text 121 510 [tabwrite~] starts writing at block boundaries.;
+#X obj 677 102 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 677 129 \; pd dsp \$1;
+#X obj 25 12 cnv 15 400 35 empty empty vphasor.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 70 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 42 50 [vphasor.mmb~] acts just like [phasor~] \, except the
+phase inlet is sample-accurate \, meaning it can be updated between
+block boundaries.;
+#X obj 87 489 tabwrite~ \$0-phasor-graph;
+#X obj 302 490 tabwrite~ \$0-vphasor-graph;
+#X obj 87 422 phasor~ 216;
+#X obj 302 422 vphasor.mmb~ 216;
+#X floatatom 87 309 5 0 0 0 - - -;
+#X text 120 310 frequency;
+#X text 808 603 .mmb;
+#X connect 2 0 5 0;
+#X connect 3 0 4 0;
+#X connect 4 0 9 0;
+#X connect 9 0 19 0;
+#X connect 9 0 20 0;
+#X connect 9 1 12 0;
+#X connect 12 0 21 1;
+#X connect 12 0 22 1;
+#X connect 14 0 15 0;
+#X connect 21 0 19 0;
+#X connect 22 0 20 0;
+#X connect 23 0 21 0;
+#X connect 23 0 22 0;

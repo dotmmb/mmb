@@ -1,0 +1,188 @@
+#N canvas 266 22 1098 726 10;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-plot 200 float 0;
+#X coords 0 1 199 -1 400 140 1;
+#X restore 201 504 graph;
+#X msg 588 188 phase \$1;
+#X obj 588 158 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 593 247 units \$1;
+#X obj 593 226 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 609 302 dbrange \$1;
+#X floatatom 609 277 5 0 0 0 - - -;
+#X floatatom 616 335 5 0 0 0 - - -;
+#X msg 616 356 amprange \$1;
+#X obj 25 12 cnv 15 400 35 empty empty filterplot.mmb 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 70 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 451 57 arg1: <required> name of array to plot the response
+;
+#X text 654 244 0 = dB \, 1 = raw amplitude <default 0>;
+#X text 686 301 amplitude range in dB mode from -x to x <default 24>
+;
+#X text 697 354 ampligue range in raw amp mode fro 0 to x <default
+2>;
+#X obj 246 311 multimode.mmb;
+#X obj 173 129 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 170 155 mtof;
+#X floatatom 170 181 5 0 0 0 - - -;
+#X floatatom 279 170 5 0 0 0 - - -;
+#X obj 279 224 dbtorms;
+#X obj 279 198 + 100;
+#X text 315 172 resonance;
+#X text 207 180 frequency;
+#X obj 351 231 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 348 253 / 127;
+#X text 397 248 mode;
+#X obj 278 254 t b f;
+#X obj 343 276 t b f;
+#X text 648 181 plot phase response <default 0>. The range of the phase
+plot is -pi to pi;
+#N canvas 212 22 1121 691 cascade 0;
+#X obj 70 210 filtercoeff.mmb lowshelf;
+#X obj 330 210 filtercoeff.mmb peaking;
+#X obj 70 91 mtof;
+#X obj 73 65 hsl 128 15 0 127 0 1 empty empty frequency 2 8 0 10 -262144
+-1 -1 3700 1;
+#X obj 119 87 hsl 128 15 0.1 2 0 1 empty empty slope 2 8 0 10 -262144
+-1 -1 8300 1;
+#X obj 116 114 t b f;
+#X obj 170 109 hsl 128 15 -24 24 0 1 empty empty gain 2 8 0 10 -262144
+-1 -1 4500 1;
+#X obj 330 91 mtof;
+#X obj 333 65 hsl 128 15 0 127 0 1 empty empty frequency 2 8 0 10 -262144
+-1 -1 5900 1;
+#X obj 379 87 hsl 128 15 0 20 0 1 empty empty Q 2 8 0 10 -262144 -1
+-1 6900 1;
+#X obj 376 114 t b f;
+#X obj 427 176 t b f;
+#X obj 430 109 hsl 128 15 -24 24 0 1 empty empty gain 2 8 0 10 -262144
+-1 -1 0 1;
+#X obj 580 210 filtercoeff.mmb peaking;
+#X obj 580 91 mtof;
+#X obj 583 65 hsl 128 15 0 127 0 1 empty empty frequency 2 8 0 10 -262144
+-1 -1 8300 1;
+#X obj 629 87 hsl 128 15 0 2 0 1 empty empty Q 2 8 0 10 -262144 -1
+-1 10000 1;
+#X obj 626 114 t b f;
+#X obj 677 176 t b f;
+#X obj 680 109 hsl 128 15 -24 24 0 1 empty empty gain 2 8 0 10 -262144
+-1 -1 9100 1;
+#X obj 830 91 mtof;
+#X obj 833 65 hsl 128 15 0 127 0 1 empty empty frequency 2 8 0 10 -262144
+-1 -1 11600 1;
+#X obj 879 87 hsl 128 15 0.1 2 0 1 empty empty slope 2 8 0 10 -262144
+-1 -1 10700 1;
+#X obj 876 114 t b f;
+#X obj 927 176 t b f;
+#X obj 930 109 hsl 128 15 -24 24 0 1 empty empty gain 2 8 0 10 -262144
+-1 -1 8400 1;
+#X obj 830 210 filtercoeff.mmb highshelf;
+#X obj 684 324 list append;
+#X obj 684 296 list;
+#X obj 728 263 t b l;
+#X obj 447 326 list append;
+#X obj 447 298 list;
+#X obj 491 265 t b l;
+#X obj 187 326 list append;
+#X obj 187 298 list;
+#X obj 231 265 t b l;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-eq 500 float 0;
+#X coords 0 1 499 -1 500 140 1;
+#X restore 329 477 graph;
+#X obj 167 171 t b f;
+#X text 399 374 [filterplot.mmb] can process several groups of cascaded
+biquad coefficients. Simply append the coefficients together into one
+long list \, and [filterplot.mmb] graph the response of all the filters.
+Very useful for EQ's \, as shown here.;
+#X obj 187 385 filterplot.mmb \$0-eq;
+#X msg 304 349 phase \$1;
+#X obj 304 327 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X connect 0 0 34 1;
+#X connect 0 0 33 0;
+#X connect 1 0 31 1;
+#X connect 1 0 30 0;
+#X connect 2 0 0 0;
+#X connect 3 0 2 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 0;
+#X connect 5 1 0 1;
+#X connect 6 0 37 0;
+#X connect 7 0 1 0;
+#X connect 8 0 7 0;
+#X connect 9 0 10 0;
+#X connect 10 0 1 0;
+#X connect 10 1 1 1;
+#X connect 11 0 1 0;
+#X connect 11 1 1 2;
+#X connect 12 0 11 0;
+#X connect 13 0 28 1;
+#X connect 13 0 27 0;
+#X connect 14 0 13 0;
+#X connect 15 0 14 0;
+#X connect 16 0 17 0;
+#X connect 17 0 13 0;
+#X connect 17 1 13 1;
+#X connect 18 0 13 0;
+#X connect 18 1 13 2;
+#X connect 19 0 18 0;
+#X connect 20 0 26 0;
+#X connect 21 0 20 0;
+#X connect 22 0 23 0;
+#X connect 23 0 26 0;
+#X connect 23 1 26 1;
+#X connect 24 0 26 0;
+#X connect 24 1 26 2;
+#X connect 25 0 24 0;
+#X connect 26 0 29 0;
+#X connect 27 0 32 0;
+#X connect 28 0 27 0;
+#X connect 29 0 28 0;
+#X connect 29 1 27 1;
+#X connect 30 0 35 0;
+#X connect 31 0 30 0;
+#X connect 32 0 31 0;
+#X connect 32 1 30 1;
+#X connect 33 0 39 0;
+#X connect 34 0 33 0;
+#X connect 35 0 34 0;
+#X connect 35 1 33 1;
+#X connect 37 0 0 0;
+#X connect 37 1 0 2;
+#X connect 40 0 39 1;
+#X connect 41 0 40 0;
+#X restore 746 494 pd cascade;
+#X text 45 48 This plots the frequency and the phase response of filters
+by feeding it biquad coefficients. It can also plot several cascade
+filters at once (see [pd cascade]).;
+#X obj 323 425 filterplot.mmb \$0-plot;
+#X text 745 471 More:;
+#X text 617 571 Note: the array must have a y-range of -1 to 1 in order
+for this to plot properly!;
+#X connect 1 0 32 1;
+#X connect 2 0 1 0;
+#X connect 3 0 32 1;
+#X connect 4 0 3 0;
+#X connect 5 0 32 1;
+#X connect 6 0 5 0;
+#X connect 7 0 8 0;
+#X connect 8 0 32 1;
+#X connect 15 0 32 0;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 18 0 15 0;
+#X connect 19 0 21 0;
+#X connect 20 0 27 0;
+#X connect 21 0 20 0;
+#X connect 24 0 25 0;
+#X connect 25 0 28 0;
+#X connect 27 0 15 0;
+#X connect 27 1 15 1;
+#X connect 28 0 15 0;
+#X connect 28 1 15 2;

@@ -1,0 +1,143 @@
+#N canvas 74 22 1077 771 10;
+#X obj 46 275 mtof;
+#X obj 46 359 line~;
+#X floatatom 71 303 0 0 0 0 - - -;
+#X floatatom 46 252 5 0 0 0 - - -;
+#X obj 47 532 lin-xfade.mmb~;
+#X obj 160 512 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X msg 230 383 0;
+#X text 86 253 MIDI note number;
+#X text 121 302 frequency;
+#X text 260 383 sync phases;
+#X obj 48 734 dac~;
+#X obj 78 650 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 74 678 dbtorms;
+#X obj 48 704 *~;
+#X text 302 512 <-- move this slider to compare;
+#X obj 683 174 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 683 196 \; pd dsp \$1;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 511 -1 400 140 1;
+#X restore 541 452 graph;
+#X obj 86 568 spectrum.mmb~ \$0-spectrum;
+#X msg 46 334 \$1 20;
+#X obj 46 190 loadbang;
+#X msg 46 216 72;
+#X obj 25 12 cnv 15 400 35 empty empty bl-asymtri.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 98 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 580 120 <-- See the help patch for this object for more info.
+;
+#X text 464 52 arg1 <optional>: name corresponding to an instance of
+[bl-init.mmb] with the same argument. This is only necessary if you
+want to generate harmonics above 22050 Hz (see below). Can be anything
+but 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-waveform 200 float 0;
+#X coords 0 1 199 -1 400 140 1;
+#X restore 541 276 graph;
+#N canvas 0 22 450 300 waveform 0;
+#X obj 132 78 inlet~;
+#X obj 132 209 tabwrite~ \$0-waveform;
+#X obj 199 170 metro 150;
+#X obj 199 87 loadbang;
+#X msg 199 120 1;
+#X obj 259 115 r pd;
+#X obj 259 138 route dsp;
+#X connect 0 0 1 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 5 0 6 0;
+#X connect 6 0 2 0;
+#X restore 88 606 pd waveform;
+#X obj 486 121 bl-init.mmb \$0;
+#X obj 129 335 hsl 128 15 0 1 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 6350 1;
+#X obj 46 433 bl-asymtri.mmb~;
+#N canvas 748 33 478 445 perfectasymtri 0;
+#X obj 109 75 inlet~;
+#X obj 169 75 inlet~;
+#X obj 239 75 inlet;
+#X obj 109 126 vphasor.mmb~;
+#X obj 220 159 clip~ 0 1;
+#X obj 148 390 outlet~;
+#X obj 238 218 *~ -1;
+#X obj 138 225 expr~ 1/$v1;
+#X obj 120 256 *~;
+#X obj 238 243 +~ 2;
+#X obj 182 305 min~;
+#X obj 236 268 *~;
+#X obj 293 223 expr~ 1/(1-$v1);
+#X obj 157 347 -~ 1;
+#X obj 109 186 *~ 2;
+#X obj 37 156 +~ 1.5;
+#X obj 37 182 wrap~;
+#X obj 218 121 expr~ 1-$v1;
+#X connect 0 0 3 0;
+#X connect 1 0 17 0;
+#X connect 2 0 3 1;
+#X connect 3 0 15 0;
+#X connect 4 0 7 0;
+#X connect 4 0 12 0;
+#X connect 6 0 9 0;
+#X connect 7 0 8 1;
+#X connect 8 0 10 0;
+#X connect 9 0 11 0;
+#X connect 10 0 13 0;
+#X connect 11 0 10 1;
+#X connect 12 0 11 1;
+#X connect 13 0 5 0;
+#X connect 14 0 8 0;
+#X connect 14 0 6 0;
+#X connect 15 0 16 0;
+#X connect 16 0 14 0;
+#X connect 17 0 4 0;
+#X restore 155 433 pd perfectasymtri;
+#X text 45 48 A bandlimited asymmetrical triangle wave with a sample-accurate
+reset and adjustable peak. The highest possible harmonic is at 22050
+Hz (Nyquist of 44.1k sample rate) \, but it will not alias at lower
+sample rates. Note: this is not a perfect triangle wave \, as it is
+actually based on parabolic curves and so has more high-end content.
+But it's a fairly reasonable approximation.;
+#X text 265 332 peak (range: 0-1 \, .5=triangle);
+#X text 697 257 The amplitude adjustment is clearly off.;
+#X text 143 496 bl-asymtri;
+#X text 236 496 perfect asymtri;
+#X text 547 630 See also:;
+#X text 895 695 .mmb;
+#X obj 658 631 bl-saw.mmb~;
+#X obj 658 661 bl-saw2.mmb~;
+#X obj 748 631 bl-pulse.mmb~;
+#X obj 748 661 bl-pulse2.mmb~;
+#X obj 548 661 bl-asymtri2.mmb~;
+#X obj 848 631 bl-tri.mmb~;
+#X obj 848 661 bl-tri2.mmb~;
+#X connect 0 0 19 0;
+#X connect 0 0 2 0;
+#X connect 1 0 30 0;
+#X connect 1 0 31 0;
+#X connect 3 0 0 0;
+#X connect 4 0 13 0;
+#X connect 4 0 18 0;
+#X connect 4 0 27 0;
+#X connect 5 0 4 2;
+#X connect 6 0 30 2;
+#X connect 6 0 31 2;
+#X connect 11 0 12 0;
+#X connect 12 0 13 1;
+#X connect 13 0 10 1;
+#X connect 13 0 10 0;
+#X connect 15 0 16 0;
+#X connect 19 0 1 0;
+#X connect 20 0 21 0;
+#X connect 21 0 3 0;
+#X connect 29 0 30 1;
+#X connect 29 0 31 1;
+#X connect 30 0 4 0;
+#X connect 31 0 4 1;

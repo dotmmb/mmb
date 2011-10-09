@@ -1,0 +1,43 @@
+#N canvas 153 22 953 703 10;
+#X obj 25 12 cnv 15 400 35 empty empty curve.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 80 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 621 576 .mmb;
+#X text 470 44 [curve.mmb~ curve];
+#X text 493 62 arg1: <optional> parameter that controls the shape of
+the curve;
+#X obj 164 431 curve.mmb~;
+#X floatatom 221 378 5 0 0 0 - - -;
+#X obj 130 209 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 165 268 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array \$0-plot 10000 float 0;
+#X coords 0 1 9999 -1 400 140 1;
+#X restore 433 384 graph;
+#X obj 137 393 t b a;
+#X obj 137 490 tabwrite~ \$0-plot;
+#X msg 130 240 \$1 200;
+#X msg 165 299 \$1 200 5;
+#X text 182 232 <target level> <time in ms> This will use the stored
+curve parameter;
+#X text 230 293 <target level> <time in ms> <curve parameter> Curve
+parameter will be stored;
+#X obj 71 230 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X text 260 378 curve parameter;
+#X text 45 48 [curve.mmb~] is similar to [vline~] except that it can
+create curved ramps instead of just linear ones. Negative curve parameters
+produce convex increases and concave decays \, while positive values
+produce concave increases and convex decays.;
+#X connect 5 0 11 0;
+#X connect 6 0 5 1;
+#X connect 7 0 12 0;
+#X connect 8 0 13 0;
+#X connect 10 0 11 0;
+#X connect 10 1 5 0;
+#X connect 12 0 10 0;
+#X connect 13 0 10 0;
+#X connect 16 0 10 0;

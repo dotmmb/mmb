@@ -1,0 +1,53 @@
+#N canvas 63 22 889 487 10;
+#X obj 25 12 cnv 15 400 35 empty empty complex_add.mmb 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 812 417 .mmb;
+#X text 335 356 See also:;
+#X text 45 48 Performs complex addition. Complex numbers are represented
+as two-element lists consisting of the real part and the imaginary
+part.;
+#X text 468 49 [complex_add.mmb real imaginary];
+#X text 487 69 arg1 <optional>: real part of stored value of right
+inlet;
+#X text 487 84 arg2 <optional>: imaginary part of stored value of right
+inlet;
+#X obj 119 318 complex_add.mmb 2 3;
+#X obj 119 357 unpack f f;
+#X floatatom 117 388 5 0 0 0 - - -;
+#X floatatom 180 389 5 0 0 0 - - -;
+#X floatatom 196 280 5 0 0 0 - - -;
+#X text 234 274 single floats are assumed to be real numbers (i.e.
+their imaginary part is zero);
+#X msg 80 147 bang;
+#X text 114 139 output output value of stored right inlet value plus
+stored left inlet value;
+#X obj 119 236 pack f f;
+#X floatatom 119 206 5 0 0 0 - - -;
+#X floatatom 164 207 5 0 0 0 - - -;
+#X obj 230 236 pack f f;
+#X floatatom 230 206 5 0 0 0 - - -;
+#X floatatom 275 207 5 0 0 0 - - -;
+#X text 225 182 real;
+#X text 275 183 imaginary;
+#X obj 407 361 complex_sub.mmb;
+#X obj 407 387 complex_sub.mmb~;
+#X obj 517 361 complex_mul.mmb;
+#X obj 517 387 complex_mul.mmb~;
+#X obj 627 361 complex_div.mmb;
+#X obj 627 387 complex_div.mmb~;
+#X obj 737 361 complex_con.mmb;
+#X obj 737 387 complex_con.mmb~;
+#X obj 297 387 complex_add.mmb~;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 9 1 11 0;
+#X connect 12 0 8 0;
+#X connect 14 0 8 0;
+#X connect 16 0 8 0;
+#X connect 17 0 16 0;
+#X connect 18 0 16 1;
+#X connect 19 0 8 1;
+#X connect 20 0 19 0;
+#X connect 21 0 19 1;

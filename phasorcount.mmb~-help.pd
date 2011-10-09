@@ -1,0 +1,23 @@
+#N canvas 46 22 708 375 10;
+#X obj 25 12 cnv 15 400 35 empty empty phasorcount.mmb~ 20 12 0 14
+-4160 -203904 0;
+#X obj 25 48 cnv 15 400 40 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 502 323 .mmb;
+#X text 45 48 Counts the number of cycles from [phasor~] and resets
+after a max value is reached.;
+#X text 291 103 [phasorcount.mmb~ counts];
+#X text 309 123 arg1: Number of cycles to count before reset. Output
+is in the range of 0 to arg1-1;
+#X obj 56 128 phasor~ 1;
+#X obj 56 296 number.mmb~;
+#X floatatom 108 166 5 0 0 0 - - -;
+#X text 144 166 number of counts;
+#X obj 161 215 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 181 213 reset counter;
+#X obj 56 240 phasorcount.mmb~ 4;
+#X connect 6 0 12 0;
+#X connect 8 0 12 1;
+#X connect 10 0 12 2;
+#X connect 12 0 7 0;

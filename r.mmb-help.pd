@@ -1,0 +1,32 @@
+#N canvas 0 22 717 453 10;
+#X obj 35 58 cnv 15 400 70 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X obj 511 76 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 511 102 getdir;
+#X text 55 58 [r.mmb] is a dynamic version of [receive]. It allows
+you to change which send it is listening to by sending a new argument
+in its inlet.;
+#X text 79 134 [r.mmb name];
+#X text 99 147 arg1: name of corresponding [send] to listen to;
+#X obj 155 255 s foo;
+#X obj 275 255 s bar;
+#X floatatom 155 226 5 0 0 0 - - -;
+#X floatatom 275 226 5 0 0 0 - - -;
+#X obj 196 359 r.mmb foo;
+#X msg 212 288 foo;
+#X msg 221 310 bar;
+#X text 265 295 these should really be symbols \, but you don't have
+to include the symbol selector;
+#X floatatom 196 395 5 0 0 0 - - -;
+#X text 530 74 see also: [s.mmb];
+#X msg 511 133 \; pd open s.mmb-help.pd \$1;
+#X obj 35 22 cnv 15 400 35 empty empty r.mmb 20 12 0 14 -4160 -203904
+0;
+#X connect 1 0 2 0;
+#X connect 2 0 16 0;
+#X connect 8 0 6 0;
+#X connect 9 0 7 0;
+#X connect 10 0 14 0;
+#X connect 11 0 10 0;
+#X connect 12 0 10 0;

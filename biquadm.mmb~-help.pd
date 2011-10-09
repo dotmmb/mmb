@@ -1,0 +1,56 @@
+#N canvas 63 22 854 534 10;
+#X obj 25 12 cnv 15 400 35 empty empty biquadm.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 70 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X obj 76 340 noise~;
+#X obj 148 196 hsl 128 15 0 22000 0 0 empty empty empty -2 -8 0 10
+-262144 -1 -1 5773 1;
+#X text 170 194 frequency;
+#X floatatom 293 196 5 0 0 0 - - -;
+#X obj 293 218 + 100;
+#X obj 293 242 dbtorms;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 511 -1 400 140 1;
+#X restore 411 223 graph;
+#X obj 76 453 spectrum.mmb~ \$0-spectrum;
+#X text 729 410 .mmb;
+#X text 332 195 Q;
+#X obj 145 137 loadbang;
+#X msg 293 167 10;
+#X msg 145 163 10000;
+#X obj 145 311 filtercoeff.mmb notch;
+#X obj 76 391 biquadm.mmb~;
+#X floatatom 195 373 5 0 0 0 - - -;
+#X msg 195 398 interp \$1;
+#X text 260 399 interpolation time in ms (default: 100);
+#X text 45 48 A message-rate biquad filter like [biquad~] \, except
+the coefficients are smoothly interpolated over time. It accepts coefficients
+as a list in the right inlet;
+#X obj 225 269 t b f;
+#X text 349 420 See also:;
+#X obj 352 474 biquad~;
+#X obj 442 448 filtercoeff.mmb;
+#X obj 442 474 filtercoeff.mmb~;
+#X obj 552 448 lop.mmb~;
+#X obj 552 474 hip.mmb~;
+#X obj 612 474 multimode.mmb~;
+#X obj 612 448 multimode.mmb;
+#X obj 712 448 filterplot.mmb;
+#X obj 352 448 biquad.mmb~;
+#X connect 2 0 16 0;
+#X connect 3 0 15 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 21 0;
+#X connect 12 0 14 0;
+#X connect 12 0 13 0;
+#X connect 13 0 5 0;
+#X connect 14 0 3 0;
+#X connect 15 0 16 1;
+#X connect 16 0 9 0;
+#X connect 17 0 18 0;
+#X connect 18 0 16 1;
+#X connect 21 0 15 0;
+#X connect 21 1 15 1;

@@ -1,0 +1,25 @@
+#N canvas 20 22 595 378 10;
+#X obj 25 12 cnv 15 400 35 empty empty pan.mmb~ 20 12 0 14 -4160 -203904
+0;
+#X obj 25 48 cnv 15 400 40 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 502 323 .mmb;
+#X obj 61 325 dac~;
+#X obj 56 257 pan.mmb~;
+#X text 45 48 Equal-power panning of mono signals.;
+#X obj 56 128 phasor~ 440;
+#X obj 142 172 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X msg 115 201 \$1 10;
+#X obj 115 222 line~;
+#X floatatom 163 199 5 0 0 0 - - -;
+#X text 283 171 pan amount. 0 = hard left \, 1 = hard right;
+#X text 440 45 [pan.mmb~];
+#X text 458 65 no arguments;
+#X connect 4 0 3 0;
+#X connect 4 1 3 1;
+#X connect 6 0 4 0;
+#X connect 7 0 8 0;
+#X connect 7 0 10 0;
+#X connect 8 0 9 0;
+#X connect 9 0 4 1;

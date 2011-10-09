@@ -1,0 +1,188 @@
+#N canvas 58 22 899 563 10;
+#X obj 25 48 cnv 15 400 70 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 45 48 These are basic mixer-strip objects that utilize panning
+\, solo \, mute \, and volume aspects of a mixer. [mixstrip1.mmb~]
+is a mixer-strip with a solo input \, [mixstrip2.mmb~] is a mixer-strip
+with a stereo input \, and [mixstripmaster.mmb~] is a master strip.
+;
+#X obj 25 12 cnv 15 400 35 empty empty mixstrip*.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X text 480 39 arg1: <required> All [mixstrip1.mmb~] and [mixstrip2.mmb~]
+objects throw~ their outputs to a [mixstripmaster.mmb~] with the same
+masterID \, and they require that [mixstripmaster.mmb~] to operate
+correctly.;
+#X text 449 21 [mixstrip1.mmb~ masterID] \, [mixstrip2.mmb~ masterID]
+;
+#X text 449 101 [mixstripmaster.mmb~ masterID];
+#X text 118 215 [mixstrip1.mmb~ \$0];
+#X text 317 206 [mixstrip2.mmb~ \$0];
+#X text 448 214 [mixstripmaster.mmb~ \$0];
+#X obj 115 175 osc~ 300;
+#X obj 294 175 osc~ 550;
+#X text 179 259 <-- panning;
+#X text 170 327 <-- meter;
+#X text 164 427 <-- mute button;
+#X text 28 427 solo button -->;
+#X text 26 335 volume fader -->;
+#X text 38 236 masterID -->;
+#X obj 451 234 mixstripmaster.mmb~ \$0;
+#X obj 451 479 dac~;
+#N canvas 13 22 1286 767 messages 0;
+#X obj 71 400 mixstrip1.mmb~ \$0-mess;
+#X msg 149 61 volume \$1;
+#X floatatom 149 31 5 0 0 0 - - -;
+#X text 213 60 in dBfs;
+#X floatatom 166 88 5 0 0 0 - - -;
+#X msg 166 115 pan \$1;
+#X obj 177 144 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 177 166 solo \$1;
+#X obj 187 194 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 187 216 mute \$1;
+#X obj 197 244 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 197 266 throw \$1;
+#X msg 200 295 dump;
+#X text 232 295 dump all parameters out right outlet;
+#X obj 552 412 mixstrip2.mmb~ \$0-mess;
+#X msg 635 61 volume \$1;
+#X floatatom 635 31 5 0 0 0 - - -;
+#X floatatom 652 88 5 0 0 0 - - -;
+#X obj 673 194 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 673 216 solo \$1;
+#X obj 683 244 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 683 266 mute \$1;
+#X obj 693 294 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 693 316 throw \$1;
+#X msg 696 345 dump;
+#X floatatom 662 138 5 0 0 0 - - -;
+#X msg 652 115 leftpan \$1;
+#X msg 662 165 rightpan \$1;
+#X obj 197 656 print mixstrip1;
+#X obj 678 675 print mixstrip2;
+#X obj 134 629 route state;
+#X text 296 656 dumped messages;
+#X obj 134 712 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 615 639 route state;
+#X obj 615 676 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 882 412 mixstripmaster.mmb~ \$0-mess;
+#X text 215 113 <default 0>;
+#X text 232 165 <default 0>;
+#X text 238 212 <default 0>;
+#X text 723 116 <default -100>;
+#X text 740 164 <default 100>;
+#X obj 945 639 route state;
+#X obj 945 676 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 1008 675 print mixstripmaster;
+#X msg 975 61 volume \$1;
+#X floatatom 975 31 5 0 0 0 - - -;
+#X floatatom 992 88 5 0 0 0 - - -;
+#X obj 1013 194 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1
+0 1;
+#X msg 1013 216 mute \$1;
+#X msg 1036 305 dump;
+#X floatatom 1002 138 5 0 0 0 - - -;
+#X msg 992 115 leftpan \$1;
+#X msg 1002 165 rightpan \$1;
+#X text 219 235 whether or not to [throw~] output to [mixstripmaster.mmb~]
+\, in case you want to do post-fader processing <default 1>;
+#X text 152 698 state outputs 0 when volume is at zero "rms" \, 1 otherwise.
+It can potentially be used to [switch~] off unnecessary upstream processing
+when there is no output.;
+#X text 261 60 <default -100>;
+#X text 1044 61 <default 0>;
+#X floatatom 1025 248 5 0 0 0 - - -;
+#X msg 1025 274 refreshrate \$1;
+#X text 1063 250 update meters in ms <default 200>;
+#X obj 72 349 osc~ 300;
+#X obj 535 348 osc~ 550;
+#X connect 0 2 30 0;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 1;
+#X connect 6 0 7 0;
+#X connect 7 0 0 1;
+#X connect 8 0 9 0;
+#X connect 9 0 0 1;
+#X connect 10 0 11 0;
+#X connect 11 0 0 1;
+#X connect 12 0 0 1;
+#X connect 14 2 33 0;
+#X connect 15 0 14 2;
+#X connect 16 0 15 0;
+#X connect 17 0 26 0;
+#X connect 18 0 19 0;
+#X connect 19 0 14 2;
+#X connect 20 0 21 0;
+#X connect 21 0 14 2;
+#X connect 22 0 23 0;
+#X connect 23 0 14 2;
+#X connect 24 0 14 2;
+#X connect 25 0 27 0;
+#X connect 26 0 14 2;
+#X connect 27 0 14 2;
+#X connect 30 0 32 0;
+#X connect 30 1 28 0;
+#X connect 33 0 34 0;
+#X connect 33 1 29 0;
+#X connect 35 2 41 0;
+#X connect 41 0 42 0;
+#X connect 41 1 43 0;
+#X connect 44 0 35 2;
+#X connect 45 0 44 0;
+#X connect 46 0 51 0;
+#X connect 47 0 48 0;
+#X connect 48 0 35 2;
+#X connect 49 0 35 2;
+#X connect 50 0 52 0;
+#X connect 51 0 35 2;
+#X connect 52 0 35 2;
+#X connect 57 0 58 0;
+#X connect 58 0 35 2;
+#X connect 60 0 0 0;
+#X connect 61 0 14 0;
+#X connect 61 0 14 1;
+#X restore 609 306 pd messages;
+#X obj 115 236 mixstrip1.mmb~ \$0;
+#X obj 294 234 mixstrip2.mmb~ \$0;
+#X text 480 119 arg1: <required> see above. The existence of this object
+is required as well. It handles the solo management \, sends the clock
+for updating the meters \, and has [catch~] objects that receive throws
+from the other two.;
+#X text 57 457 Audio is sent out the outlets and (maybe) thrown~ to
+the [mixstripmaster.mmb~] (see [pd messages]).;
+#N canvas 0 22 708 397 order.forcing 0;
+#N canvas 466 42 558 437 channels 0;
+#X obj 105 124 mixstrip1.mmb~ \$0-ex;
+#X obj 185 124 mixstrip1.mmb~ \$0-ex;
+#X obj 265 124 mixstrip1.mmb~ \$0-ex;
+#X obj 345 124 mixstrip2.mmb~ \$0-ex;
+#X obj 425 124 mixstrip2.mmb~ \$0-ex;
+#X obj 202 375 outlet~;
+#X obj 252 375 outlet~;
+#X coords 0 -1 1 1 400 240 1 100 100;
+#X restore 88 124 pd channels;
+#X obj 518 148 mixstripmaster.mmb~ \$0-ex;
+#X text 86 20 To ensure there are no block size delays in the processing
+chain \, you need to make sure that the [mixstrip1.mmb~] and [mixstrip2.mmb~]
+execute before [mixstripmaster.mmb~] by grouping them in a subpatch.
+See Help -> Browser... -> Pure Data -> 3.audio.examples -> G05.execution.order.pd
+for more details.;
+#X connect 0 1 1 0;
+#X restore 609 328 pd order.forcing;
+#X text 612 284 More:;
+#X text 811 523 .mmb;
+#X connect 9 0 20 0;
+#X connect 10 0 21 0;
+#X connect 10 0 21 1;
+#X connect 17 0 18 0;
+#X connect 17 1 18 1;

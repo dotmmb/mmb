@@ -1,0 +1,89 @@
+#N canvas 67 22 1054 748 10;
+#X obj 76 273 sig~;
+#X floatatom 76 213 5 0 0 0 - - -;
+#X obj 76 245 / 100;
+#X obj 159 575 metro 100;
+#X obj 165 550 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-dcblock 256 float 2;
+#X coords 0 1 255 -1 256 140 1;
+#X restore 636 190 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-hip 256 float 2;
+#X coords 0 1 255 -1 256 140 1;
+#X restore 636 440 graph;
+#X obj 131 641 tabwrite~ \$0-dcblock;
+#X obj 49 665 tabwrite~ \$0-hip;
+#X obj 159 222 osc~ 200;
+#X obj 159 273 *~;
+#X obj 174 249 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 49 363 +~;
+#X obj 131 363 +~;
+#X floatatom 159 196 5 0 0 0 - - -;
+#X obj 49 419 +~;
+#X obj 131 419 +~;
+#X obj 238 290 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 244 403 5 0 0 0 - - -;
+#X obj 237 369 / 10;
+#X obj 238 344 - 200;
+#X obj 238 319 random 400;
+#X obj 49 477 hip~ 3;
+#X text 31 212 add DC;
+#X text 192 248 add sinewave;
+#X text 258 289 random DC jump;
+#X text 186 547 plot;
+#X obj 15 12 cnv 15 400 35 empty empty dcblock.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 15 48 cnv 15 400 110 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 430 47 [dcblock.mmb~ <delay in samps>];
+#X text 35 48 [dcblock.mmb~] is a linear-phase DC offset filter. It
+has a much faster transient response than simply using [hip~] and doesn't
+introduce phase issues. It does \, however \, introduce a delay and
+doesn't have quite as good a frequency response. Frequency response
+can be improved by increasing the delay. This will result in a longer
+transient response \, but in most cases it will probably still be faster
+than [hip~ 3].;
+#X text 447 61 arg1: <optional> overall delay in samples (default is
+256). The maximum delay should be SR/10-2 (4408 at 44.1k) though it
+seems to get unreliable at around 4300 at 44.1k for some reason. Of
+course \, that's also a pretty extreme delay...;
+#X text 639 631 .mmb;
+#X text 197 187 with a 512 sample delay \, it begins to attenuate at
+about 110Hz;
+#X text 687 369 [dcblock.mmb~] vs. [hip~];
+#X msg 232 437 clear;
+#X msg 201 344 0;
+#X obj 131 477 dcblock.mmb~ 512;
+#X text 272 430 In the unlikely event that the filter does experience
+some drift \, it may need to be cleared. (This doesn't really work
+right \, though. I often have to click this a few times.);
+#X connect 0 0 12 0;
+#X connect 0 0 13 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 3 0 7 0;
+#X connect 3 0 8 0;
+#X connect 4 0 3 0;
+#X connect 9 0 10 0;
+#X connect 10 0 13 1;
+#X connect 10 0 12 1;
+#X connect 11 0 10 1;
+#X connect 12 0 15 0;
+#X connect 13 0 16 0;
+#X connect 14 0 9 0;
+#X connect 15 0 22 0;
+#X connect 16 0 37 0;
+#X connect 17 0 21 0;
+#X connect 19 0 16 1;
+#X connect 19 0 15 1;
+#X connect 19 0 18 0;
+#X connect 20 0 19 0;
+#X connect 21 0 20 0;
+#X connect 22 0 8 0;
+#X connect 35 0 37 1;
+#X connect 36 0 19 0;
+#X connect 37 0 7 0;

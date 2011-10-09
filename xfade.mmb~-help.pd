@@ -1,0 +1,32 @@
+#N canvas 558 28 608 417 10;
+#X obj 25 12 cnv 15 400 35 empty empty xfade.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 498 362 .mmb;
+#X obj 63 307 xfade.mmb~;
+#X obj 76 114 noise~;
+#X obj 180 217 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X msg 177 241 \$1 10;
+#X obj 177 265 line~;
+#X obj 53 370 dac~;
+#X obj 35 209 lop~ 5000;
+#X obj 104 209 hip~ 5000;
+#X text 465 60 no arguments;
+#X text 448 46 [xfade.mmb~];
+#X text 45 48 A constant-power crossfader based on cosine curves. Works
+well for signals that aren't phase-synchronized.;
+#X text 176 185 crossfade amount between the left and middle inlets.
+0 = left inlet \, 1 = middle inlet.;
+#X obj 347 347 lin-xfade.mmb~;
+#X text 344 322 See also:;
+#X connect 3 0 8 0;
+#X connect 3 0 8 1;
+#X connect 4 0 9 0;
+#X connect 4 0 10 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 3 2;
+#X connect 9 0 3 0;
+#X connect 10 0 3 1;

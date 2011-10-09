@@ -1,0 +1,367 @@
+#N canvas 371 22 927 691 10;
+#X obj 25 48 cnv 15 400 100 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 483 43 arg1: <required> name of the parameter. Should be unique
+against all others with the same heroID.;
+#X text 466 24 [save.me.mmb parametername heroID order];
+#X text 483 112 arg3: <optional> Loading order. Must be int > 0;
+#X obj 241 411 save.me.mmb hslider \$0;
+#X obj 79 411 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 94 226 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 154 281 save.me.mmb vslider \$0;
+#X text 152 304 outlet recalls it;
+#X floatatom 80 490 5 0 0 0 - - -;
+#X symbolatom 73 573 10 0 0 0 - - -;
+#X obj 155 563 save.me.mmb symbolbox \$0;
+#X obj 141 491 save.me.mmb numberbox \$0;
+#X text 151 259 left inlet stores parameter;
+#X obj 496 333 my.hero.mmb \$0;
+#X msg 496 293 save;
+#X obj 403 332 prepend load;
+#X text 502 373 4 click messagebox to revert to saved;
+#X text 537 293 2 click save message to grab parameters;
+#X text 467 246 1 change values of GUI objects;
+#X text 595 325 3 change values again;
+#X obj 155 589 symbol;
+#X text 200 587 symbols need to be reminded that they're symbols;
+#N canvas 0 22 1190 484 messages 0;
+#X obj 660 301 my.hero.mmb \$0-messages;
+#X msg 660 189 save;
+#X msg 346 86 save2;
+#X text 388 87 forces [my.hero.mmb] to dump this parameter only;
+#X msg 367 119 clear;
+#X text 413 119 erases stored parameter(s) from [save.me.mmb];
+#X obj 156 178 save.me.mmb collection \$0-messages;
+#X floatatom 93 175 5 0 0 0 - - -;
+#X msg 93 208 add \$1;
+#X obj 104 311 vradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144
+-1 -1 0;
+#X obj 146 361 save.me.mmb vradio \$0-messages;
+#X obj 562 303 prepend load;
+#X msg 683 245 load vradio 4;
+#X text 775 243 load sends a parameter to the corresponding [save.me.mmb]
+;
+#X text 708 181 save dumps all parameters with the "set" and "addcomma"
+messages so they can be easily put in a message box (if you need to
+get rid of them \, use [route set addcomma]).;
+#X msg 660 341;
+#X text 113 233 prepending with add will store a stream of values;
+#X connect 0 0 15 0;
+#X connect 1 0 0 0;
+#X connect 2 0 6 1;
+#X connect 4 0 6 1;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 8 0 6 0;
+#X connect 9 0 10 0;
+#X connect 10 0 9 0;
+#X connect 11 0 0 0;
+#X connect 12 0 0 0;
+#X connect 15 0 11 0;
+#X restore 650 467 pd messages;
+#X msg 496 393;
+#X text 649 442 More:;
+#N canvas 107 35 1140 567 arrays/lists 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-array1 5 float 2;
+#X coords 0 1 5 -1 200 140 1;
+#X restore 108 36 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-array2 5 float 2;
+#X coords 0 1 5 -1 200 140 1;
+#X restore 108 196 graph;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-array3 5 float 2;
+#X coords 0 1 5 -1 200 140 1;
+#X restore 108 356 graph;
+#X text 401 35 [save.me.mmb] can store lists as well \, which can be
+a convenient way to store table data;
+#X obj 398 193 save.me.mmb array1 \$0-arrays;
+#X obj 398 166 tabdump \$0-array1;
+#X obj 398 220 tabset \$0-array1;
+#X obj 398 286 tabdump \$0-array2;
+#X obj 398 313 save.me.mmb array2 \$0-arrays;
+#X obj 398 340 tabset \$0-array2;
+#X obj 398 416 tabdump \$0-array3;
+#X obj 398 443 save.me.mmb array3 \$0-arrays;
+#X obj 398 470 tabset \$0-array3;
+#X obj 748 183 my.hero.mmb \$0-arrays;
+#X obj 639 197 prepend load;
+#X msg 748 107 save;
+#X obj 748 131 t a b;
+#X obj 775 154 s \$0-dump.arrays;
+#X obj 324 129 r \$0-dump.arrays;
+#X msg 748 223;
+#X connect 4 0 6 0;
+#X connect 5 0 4 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 13 0 19 0;
+#X connect 14 0 13 0;
+#X connect 15 0 16 0;
+#X connect 16 0 13 0;
+#X connect 16 1 17 0;
+#X connect 18 0 5 0;
+#X connect 18 0 7 0;
+#X connect 18 0 10 0;
+#X connect 19 0 14 0;
+#X restore 650 488 pd arrays/lists;
+#N canvas 187 22 815 672 loading.order 0;
+#X text 57 21 The third argument of [save.me.mmb] is used to force
+the loading order. This can be useful in situations where it is important
+that one parameter be set before another. The argument must be an integer
+>= 1 \, and the loading order starts with the lowest number first.
+Multiple [save.me.mmb] objects can have the same third argument. An
+argument of 0 is the same as having no argument \; these parameters
+are stored/loaded last \, and their order is dependent on their creation
+order.;
+#X floatatom 56 213 5 0 0 0 - - -;
+#X obj 117 176 save.me.mmb num1 \$0-load.order 2;
+#X obj 218 211 save.me.mmb num2 \$0-load.order 1;
+#X floatatom 152 218 5 0 0 0 - - -;
+#X obj 97 267 +;
+#X floatatom 97 306 5 0 0 0 - - -;
+#X obj 212 452 save.me.mmb num4 \$0-load.order;
+#X floatatom 63 466 5 0 0 0 - - -;
+#X floatatom 153 468 5 0 0 0 - - -;
+#X obj 108 522 +;
+#X floatatom 108 565 5 0 0 0 - - -;
+#X obj 537 279 my.hero.mmb \$0-load.order;
+#X obj 439 293 prepend load;
+#X msg 537 237 save;
+#X obj 104 420 save.me.mmb num3 \$0-load.order;
+#X text 142 307 right;
+#X text 150 565 wrong;
+#X msg 537 319;
+#X connect 1 0 2 0;
+#X connect 1 0 5 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 3 0;
+#X connect 4 0 5 1;
+#X connect 5 0 6 0;
+#X connect 7 0 9 0;
+#X connect 8 0 10 0;
+#X connect 8 0 15 0;
+#X connect 9 0 7 0;
+#X connect 9 0 10 1;
+#X connect 10 0 11 0;
+#X connect 12 0 18 0;
+#X connect 13 0 12 0;
+#X connect 14 0 12 0;
+#X connect 15 0 8 0;
+#X connect 18 0 13 0;
+#X restore 650 509 pd loading.order;
+#X text 483 76 arg2: <required> ID of the [my.hero.mmb] object that
+will load/call the parameters.;
+#X text 467 142 [my.hero.mmb heroID];
+#X text 483 161 arg1: <required> Unique ID. All [save.me.mmb] objects
+with the same ID will store their parameters here. When in doubt \,
+use \$0.;
+#N canvas 108 35 1064 608 preset.system 0;
+#X obj 596 49 hradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144 -1
+-1 0;
+#X text 594 29 select/recall preset;
+#X obj 413 106 my.hero.mmb \$0-presets;
+#X msg 413 34 save;
+#X text 448 34 store preset;
+#X msg 556 335;
+#X msg 572 355;
+#X msg 587 375;
+#X msg 602 395;
+#X msg 618 415;
+#X obj 526 264 route 0 1 2 3 4 5 6 7;
+#X msg 633 435;
+#X obj 526 478 prepend load;
+#X obj 526 507 s \$0-my.hero.presets;
+#X obj 103 190 knob 32 32 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 1;
+#X obj 103 250 knob 32 32 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 1;
+#X obj 103 310 knob 32 32 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 1;
+#X obj 103 370 knob 32 32 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 1;
+#X obj 161 198 save.me.mmb knob1 \$0-presets;
+#X obj 161 258 save.me.mmb knob2 \$0-presets;
+#X obj 161 318 save.me.mmb knob3 \$0-presets;
+#X obj 161 378 save.me.mmb knob4 \$0-presets;
+#X text 58 40 A simple preset system;
+#X obj 448 204 list prepend;
+#X msg 517 173 \$1;
+#X obj 425 75 r \$0-my.hero.presets;
+#X msg 526 295;
+#X msg 541 315;
+#X connect 0 0 24 0;
+#X connect 0 0 10 0;
+#X connect 2 0 23 0;
+#X connect 3 0 2 0;
+#X connect 5 0 12 0;
+#X connect 6 0 12 0;
+#X connect 7 0 12 0;
+#X connect 8 0 12 0;
+#X connect 9 0 12 0;
+#X connect 10 0 26 0;
+#X connect 10 1 27 0;
+#X connect 10 2 5 0;
+#X connect 10 3 6 0;
+#X connect 10 4 7 0;
+#X connect 10 5 8 0;
+#X connect 10 6 9 0;
+#X connect 10 7 11 0;
+#X connect 11 0 12 0;
+#X connect 12 0 13 0;
+#X connect 14 0 18 0;
+#X connect 15 0 19 0;
+#X connect 16 0 20 0;
+#X connect 17 0 21 0;
+#X connect 18 0 14 0;
+#X connect 19 0 15 0;
+#X connect 20 0 16 0;
+#X connect 21 0 17 0;
+#X connect 23 0 10 0;
+#X connect 24 0 23 1;
+#X connect 25 0 2 0;
+#X connect 26 0 12 0;
+#X connect 27 0 12 0;
+#X restore 650 530 pd preset.system;
+#N canvas 182 129 940 577 save.to.file 0;
+#X obj 514 423 textfile;
+#X obj 478 74 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X msg 591 340 clear;
+#X obj 520 270 my.hero.mmb \$0-files;
+#X msg 519 219 save;
+#X obj 478 130 t s b b b;
+#X msg 457 369 write \$1;
+#X text 496 73 save;
+#X obj 649 72 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 649 100 openpanel;
+#X text 667 71 load;
+#X obj 649 174 textfile;
+#X msg 649 136 read \$1 \, rewind \, bang;
+#X obj 617 202 t b a;
+#X obj 641 226 prepend load;
+#X obj 90 156 knob 32 32 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 1;
+#X obj 144 167 save.me.mmb knob1 \$0-files;
+#X obj 90 216 knob 32 32 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 1;
+#X obj 90 276 knob 32 32 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 1;
+#X obj 90 336 knob 32 32 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 1;
+#X text 117 48 how to read and write presets to a file;
+#X obj 478 102 savepanel;
+#X obj 514 336 prepend add;
+#X obj 144 227 save.me.mmb knob2 \$0-files;
+#X obj 144 347 save.me.mmb knob4 \$0-files;
+#X obj 144 287 save.me.mmb knob3 \$0-files;
+#X msg 514 299;
+#X connect 1 0 21 0;
+#X connect 2 0 0 0;
+#X connect 3 0 26 0;
+#X connect 4 0 3 0;
+#X connect 5 0 6 0;
+#X connect 5 1 26 0;
+#X connect 5 2 4 0;
+#X connect 5 3 2 0;
+#X connect 6 0 0 0;
+#X connect 8 0 9 0;
+#X connect 9 0 12 0;
+#X connect 11 0 13 0;
+#X connect 12 0 11 0;
+#X connect 13 0 11 0;
+#X connect 13 1 14 0;
+#X connect 14 0 3 0;
+#X connect 15 0 16 0;
+#X connect 16 0 15 0;
+#X connect 17 0 23 0;
+#X connect 18 0 25 0;
+#X connect 19 0 24 0;
+#X connect 21 0 5 0;
+#X connect 22 0 0 0;
+#X connect 23 0 17 0;
+#X connect 24 0 19 0;
+#X connect 25 0 18 0;
+#X connect 26 0 22 0;
+#X restore 650 551 pd save.to.file;
+#N canvas 153 48 978 767 abstractions 0;
+#X obj 176 255 dump.example.mmb;
+#X obj 336 157 r \$0-dumps;
+#X msg 371 236 clear;
+#X obj 336 179 t b b;
+#X msg 314 209 dump;
+#X obj 171 387 prepend add;
+#X obj 73 311 t a;
+#X obj 563 234 my.hero.mmb \$0-abs;
+#X msg 563 152 save;
+#X obj 473 235 prepend load;
+#X obj 563 182 t a b;
+#X obj 590 207 s \$0-dumps;
+#X text 66 55 By writing abstractions that can dump their parameters
+\, you can take advantage of the clear and add messages to store the
+dumped paramters using a single [save.me.mmb]. As it happens \, these
+objects make that fairly simple (look inside [dump.example.mmb]).;
+#X obj 226 501 dump.example.mmb;
+#X obj 386 403 r \$0-dumps;
+#X msg 421 482 clear;
+#X obj 386 425 t b b;
+#X msg 364 455 dump;
+#X obj 221 633 prepend add;
+#X obj 123 557 t a;
+#X obj 154 429 save.me.mmb fakeadsr1 \$0-abs;
+#X obj 204 675 save.me.mmb fakeadsr2 \$0-abs;
+#X msg 563 264;
+#X connect 0 0 5 0;
+#X connect 1 0 3 0;
+#X connect 2 0 20 1;
+#X connect 3 0 4 0;
+#X connect 3 1 2 0;
+#X connect 4 0 0 0;
+#X connect 5 0 20 0;
+#X connect 6 0 0 0;
+#X connect 7 0 22 0;
+#X connect 8 0 10 0;
+#X connect 9 0 7 0;
+#X connect 10 0 7 0;
+#X connect 10 1 11 0;
+#X connect 13 0 18 0;
+#X connect 14 0 16 0;
+#X connect 15 0 21 1;
+#X connect 16 0 17 0;
+#X connect 16 1 15 0;
+#X connect 17 0 13 0;
+#X connect 18 0 21 0;
+#X connect 19 0 13 0;
+#X connect 20 0 6 0;
+#X connect 21 0 19 0;
+#X connect 22 0 9 0;
+#X restore 650 572 pd abstractions;
+#X text 776 604 .mmb;
+#X obj 25 12 cnv 15 400 35 empty empty save.me.mmb/my.hero.mmb 20 12
+0 14 -4160 -203904 0;
+#X text 45 48 [save.me.mmb] is used in conjunction with [my.hero.mmb]
+for the purpose of state saving. Any parameter connected to the left
+inlet of multiple [save.me.mmb] objects can be collected and output
+from a [my.hero.mmb] object. Conversely \, parameters can be dispatched
+from a [my.hero.mmb] object and sent to corresponding [save.me.mmb]
+objects.;
+#X connect 4 0 5 0;
+#X connect 5 0 4 0;
+#X connect 6 0 7 0;
+#X connect 7 0 6 0;
+#X connect 9 0 12 0;
+#X connect 10 0 11 0;
+#X connect 11 0 21 0;
+#X connect 12 0 9 0;
+#X connect 14 0 24 0;
+#X connect 15 0 14 0;
+#X connect 16 0 14 0;
+#X connect 21 0 10 0;
+#X connect 24 0 16 0;

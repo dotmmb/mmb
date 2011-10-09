@@ -1,0 +1,173 @@
+#N canvas 81 22 1077 771 10;
+#X obj 46 275 mtof;
+#X obj 46 359 line~;
+#X floatatom 46 303 0 0 0 0 - - -;
+#X floatatom 46 252 5 0 0 0 - - -;
+#X text 86 253 MIDI note number;
+#X text 96 302 frequency;
+#X obj 54 708 dac~;
+#X obj 84 624 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 80 652 dbtorms;
+#X obj 54 678 *~;
+#X obj 727 114 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X msg 727 136 \; pd dsp \$1;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 512 0 400 140 1;
+#X restore 555 581 graph;
+#X msg 46 334 \$1 20;
+#X obj 46 190 loadbang;
+#X msg 46 216 72;
+#X obj 25 12 cnv 15 400 35 empty empty spectrum.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 85 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X obj 79 401 bl-saw.mmb~;
+#X text 923 731 .mmb;
+#N canvas 0 22 840 376 select 0;
+#X obj 77 70 inlet~;
+#X obj 147 70 inlet~;
+#X obj 217 70 inlet~;
+#X obj 287 70 inlet~;
+#X obj 387 70 inlet;
+#X obj 77 249 *~;
+#X obj 92 226 == 0;
+#X obj 147 249 *~;
+#X obj 217 249 *~;
+#X obj 287 249 *~;
+#X obj 162 226 == 1;
+#X obj 232 226 == 2;
+#X obj 302 226 == 3;
+#X obj 83 316 outlet~;
+#X obj 387 181 f;
+#X msg 387 129 0;
+#X msg 438 128 1;
+#X msg 490 128 2;
+#X msg 542 127 3;
+#X obj 387 100 route osc~ bl-saw.mmb~ phasor~ noise~;
+#X obj 459 46 loadbang;
+#X msg 459 69 osc~;
+#X connect 0 0 5 0;
+#X connect 1 0 7 0;
+#X connect 2 0 8 0;
+#X connect 3 0 9 0;
+#X connect 4 0 19 0;
+#X connect 5 0 13 0;
+#X connect 6 0 5 1;
+#X connect 7 0 13 0;
+#X connect 8 0 13 0;
+#X connect 9 0 13 0;
+#X connect 10 0 7 1;
+#X connect 11 0 8 1;
+#X connect 12 0 9 1;
+#X connect 14 0 6 0;
+#X connect 14 0 10 0;
+#X connect 14 0 11 0;
+#X connect 14 0 12 0;
+#X connect 15 0 14 0;
+#X connect 16 0 14 0;
+#X connect 17 0 14 0;
+#X connect 18 0 14 0;
+#X connect 19 0 15 0;
+#X connect 19 1 16 0;
+#X connect 19 2 17 0;
+#X connect 19 3 18 0;
+#X connect 20 0 21 0;
+#X connect 21 0 19 0;
+#X restore 100 502 pd select;
+#X obj 46 401 osc~;
+#X obj 153 401 phasor~;
+#X obj 202 401 noise~;
+#X msg 205 447 osc~;
+#X msg 205 469 bl-saw.mmb~;
+#X msg 205 492 phasor~;
+#X msg 205 513 noise~;
+#X text 202 427 select generator;
+#X text 452 36 [spectrum.mmb~ arrayname];
+#X msg 415 174 plot \$1;
+#X obj 415 145 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 426 208 5 0 0 0 - - -;
+#X msg 426 232 refresh \$1;
+#X text 467 174 turn plotting on and off (default: 1);
+#X text 497 232 refresh rate in ms for writing to the array (default:
+100);
+#X msg 435 275 linamp \$1;
+#X obj 435 255 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X floatatom 445 303 5 0 0 0 - - -;
+#X floatatom 490 304 5 0 0 0 - - -;
+#X obj 445 329 pack f f;
+#X msg 445 350 dbrange \$1 \$2;
+#X floatatom 455 373 5 0 0 0 - - -;
+#X floatatom 500 374 5 0 0 0 - - -;
+#X obj 455 399 pack f f;
+#X msg 455 420 amprange \$1 \$2;
+#X text 550 409 amplitude range when in raw amp mode. Minimum is 0
+(default: 0 1);
+#X obj 466 457 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 466 481 logfreq \$1;
+#X text 538 479 use logarithmic frequency range (default: 0);
+#X text 500 265 use linear raw amplitude instead of logarithmic dB
+amplitude (default: 0);
+#X obj 163 574 spectrum.mmb~ \$0-spectrum;
+#X text 464 52 arg1 <required>: name of the array that the spectrum
+will be written to.;
+#X text 45 48 Draws the magnitude spectrum of the input signal into
+an array. The array size should be a power-of-to. If it isn't \, don't
+worry \, [spectrum.mmb~] will resize it to the next highest power-of-two
+for you. Also \, should you choose to resize the table \, you will
+need to restart the dsp to see the correct spectrum;
+#X msg 473 528 full \$1;
+#X obj 473 507 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X text 530 520 1 = plot full spectrum from 0 to SR. 0 = plot half
+spectrum from 0 to Nyquist. (default: 0);
+#X text 534 328 amplitude range when in dB amp mode. 0 dB = unity (not
+Pd's standard of 100 dB). Minimum is -100 (default: -90 0) You can
+even make it upside-down \, if you like.;
+#X connect 0 0 2 0;
+#X connect 1 0 18 0;
+#X connect 1 0 21 0;
+#X connect 1 0 22 0;
+#X connect 2 0 13 0;
+#X connect 3 0 0 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 1;
+#X connect 9 0 6 1;
+#X connect 9 0 6 0;
+#X connect 10 0 11 0;
+#X connect 13 0 1 0;
+#X connect 14 0 15 0;
+#X connect 15 0 3 0;
+#X connect 18 0 20 1;
+#X connect 20 0 9 0;
+#X connect 20 0 51 0;
+#X connect 21 0 20 0;
+#X connect 22 0 20 2;
+#X connect 23 0 20 3;
+#X connect 24 0 20 4;
+#X connect 25 0 20 4;
+#X connect 26 0 20 4;
+#X connect 27 0 20 4;
+#X connect 30 0 51 1;
+#X connect 31 0 30 0;
+#X connect 32 0 33 0;
+#X connect 33 0 51 1;
+#X connect 36 0 51 1;
+#X connect 37 0 36 0;
+#X connect 38 0 40 0;
+#X connect 39 0 40 1;
+#X connect 40 0 41 0;
+#X connect 41 0 51 1;
+#X connect 42 0 44 0;
+#X connect 43 0 44 1;
+#X connect 44 0 45 0;
+#X connect 45 0 51 1;
+#X connect 47 0 48 0;
+#X connect 48 0 51 1;
+#X connect 54 0 51 1;
+#X connect 55 0 54 0;

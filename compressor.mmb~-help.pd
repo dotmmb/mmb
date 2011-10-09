@@ -1,0 +1,181 @@
+#N canvas 235 22 1064 824 10;
+#X obj 25 12 cnv 15 400 35 empty empty compressor.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 60 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 970 767 .mmb;
+#X text 233 148 no arguments;
+#X obj 185 527 compressor.mmb~;
+#X text 45 48 Performs dynamic compression. When an input signal's
+level goes above the threshold \, it gets reduce by the ratio amount.
+The right outlet can be used to sidechain compress another signal.
+;
+#X text 214 128 [compressor.mmb~];
+#X msg 491 59 threshold \$1;
+#X floatatom 491 29 5 0 0 0 - - -;
+#X msg 510 125 ratio \$1;
+#X floatatom 510 101 5 0 0 0 - - -;
+#X floatatom 522 166 5 0 0 0 - - -;
+#X msg 522 190 knee \$1;
+#X msg 528 258 attack \$1;
+#X floatatom 528 234 5 0 0 0 - - -;
+#X floatatom 538 294 5 0 0 0 - - -;
+#X msg 538 318 release \$1;
+#X obj 546 356 hradio 15 1 0 3 empty empty empty 0 -8 0 10 -262144
+-1 -1 2;
+#X msg 546 378 follow \$1;
+#X text 576 31 Threshold in dB. Once the level goes above the threshold
+\, the compressor kicks in (goes into its attack stage). When it goes
+below the level \, it shuts off (goes into release stage). 0 dB = unity
+(not 100 dB). (default: 0);
+#X text 578 103 Ratio is n:1. When the compressor has fully kicked
+(i.e. the attack stage has finished) the level is reduced n dB for
+every 1 dB above the threshold. (default: 1);
+#X text 577 163 Radius of the soft knee (i.e. curve of the transfer
+function at the threshold). When radius is 0 \, it is a hard knee.
+(default: 0);
+#X text 594 238 Amount of time in ms that it takes to transition into
+full compression once the signal has gone above the threshold. (default:
+0);
+#X text 610 298 Amount of time in ms that it takes to transition back
+to no compression once the signal has gone below the threshold. (default:
+0);
+#X text 619 350 Type of envelope follower to use for the level detection.
+0 = peak (raw amplitude) \, 1 = RMS \, and 2 = instantaneous amplitude
+(a phase-independent measure of the amplitude). (default: 0);
+#X obj 547 422 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 547 446 lookahead \$1;
+#N canvas 0 22 1208 749 kick.synth 0;
+#X obj 220 25 inlet;
+#X obj 753 248 phasor~;
+#X obj 754 282 *~ 4096;
+#X obj 754 314 +~ 1;
+#X obj 446 259 phasor~;
+#X obj 446 301 *~ 4096;
+#X obj 446 333 +~ 1;
+#X obj 446 364 tabread4~ \$0-sine;
+#X obj 754 345 tabread4~ \$0-sine;
+#X obj 505 502 *~;
+#X obj 269 217 line~;
+#X obj 418 526 *~;
+#X obj 398 681 outlet~;
+#X msg 567 203 0;
+#X obj 154 371 noise~;
+#X obj 505 116 * 1.3;
+#X obj 543 35 loadbang;
+#X obj 222 409 line~;
+#X obj 182 500 *~;
+#X obj 135 432 lop~ 700;
+#X obj 446 397 expr~ exp($v2*$v1-$v2);
+#X obj 201 447 lop~ 200;
+#X obj 272 301 expr~ pow($v1 \, 2.2);
+#X obj 576 346 *~ 15;
+#X obj 576 303 expr~ pow($v1 \, 10);
+#X obj 419 100 line~;
+#X obj 418 182 +~ 55;
+#X obj 741 189 +~ 55;
+#X obj 419 125 *~;
+#X obj 418 153 *~ 10;
+#X msg 421 72 1 \, 0 150;
+#X msg 269 184 1 \, 0 360;
+#X obj 265 593 *~ 0.5;
+#X msg 222 376 1 \, 0 7;
+#X msg 542 65 60;
+#X obj 1034 81 table \$0-sine 4096;
+#X obj 968 78 loadbang;
+#X msg 971 119 sinesum 4096 1;
+#X obj 971 147 s \$0-sine;
+#X connect 0 0 31 0;
+#X connect 0 0 13 0;
+#X connect 0 0 33 0;
+#X connect 0 0 30 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 8 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 20 0;
+#X connect 8 0 9 0;
+#X connect 9 0 11 1;
+#X connect 10 0 22 0;
+#X connect 10 0 24 0;
+#X connect 11 0 12 0;
+#X connect 13 0 1 1;
+#X connect 13 0 4 1;
+#X connect 14 0 19 0;
+#X connect 15 0 26 1;
+#X connect 16 0 34 0;
+#X connect 17 0 21 0;
+#X connect 18 0 32 0;
+#X connect 19 0 18 0;
+#X connect 20 0 9 1;
+#X connect 21 0 18 1;
+#X connect 22 0 11 0;
+#X connect 23 0 20 1;
+#X connect 24 0 23 0;
+#X connect 25 0 28 0;
+#X connect 25 0 28 1;
+#X connect 26 0 4 0;
+#X connect 27 0 1 0;
+#X connect 28 0 29 0;
+#X connect 29 0 26 0;
+#X connect 29 0 27 0;
+#X connect 30 0 25 0;
+#X connect 31 0 10 0;
+#X connect 32 0 12 0;
+#X connect 33 0 17 0;
+#X connect 34 0 15 0;
+#X connect 34 0 27 1;
+#X connect 36 0 37 0;
+#X connect 37 0 38 0;
+#X restore 166 273 pd kick.synth;
+#X obj 166 215 metro 500;
+#X obj 166 181 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 688 771 dac~;
+#X obj 277 562 *~;
+#X obj 295 527 noise~;
+#X text 19 529 Outlet 1: compressed input;
+#X text 305 553 Outlet 2: sidechain level. Multiply by another signal
+to sidechain compress it.;
+#X obj 166 294 mixstrip1.mmb~ \$0;
+#X obj 185 589 mixstrip1.mmb~ \$0;
+#X obj 277 588 mixstrip1.mmb~ \$0;
+#X obj 682 547 mixstripmaster.mmb~ \$0;
+#X obj 261 253 loadbang;
+#X text 633 417 Toggle look-ahead on or off. With look-ahead on \,
+the signal is delayed by 64 samples to make up for the slow reaction
+time of the envelope followers. If it is off \, it may not compress
+the very beginning of transients \, even if the attack time is zero.
+Instantaneous amplitude detection is quite fast \, though \, so you
+may not need look-ahead when using it. (default: 0);
+#X msg 261 273 throw 0 \, volume 0;
+#X connect 4 0 36 0;
+#X connect 4 1 31 0;
+#X connect 7 0 4 1;
+#X connect 8 0 7 0;
+#X connect 9 0 4 1;
+#X connect 10 0 9 0;
+#X connect 11 0 12 0;
+#X connect 12 0 4 1;
+#X connect 13 0 4 1;
+#X connect 14 0 13 0;
+#X connect 15 0 16 0;
+#X connect 16 0 4 1;
+#X connect 17 0 18 0;
+#X connect 18 0 4 1;
+#X connect 25 0 26 0;
+#X connect 26 0 4 1;
+#X connect 27 0 35 0;
+#X connect 28 0 27 0;
+#X connect 29 0 28 0;
+#X connect 31 0 37 0;
+#X connect 32 0 31 1;
+#X connect 35 0 4 0;
+#X connect 35 1 4 0;
+#X connect 38 0 30 0;
+#X connect 38 1 30 1;
+#X connect 39 0 41 0;
+#X connect 41 0 35 1;

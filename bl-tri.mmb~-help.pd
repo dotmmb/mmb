@@ -1,0 +1,107 @@
+#N canvas 81 22 1077 771 10;
+#X obj 46 225 mtof;
+#X obj 46 309 line~;
+#X floatatom 71 253 0 0 0 0 - - -;
+#X floatatom 46 202 5 0 0 0 - - -;
+#X obj 47 482 lin-xfade.mmb~;
+#X obj 160 462 hsl 128 15 0 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 161 363 vphasor.mmb~;
+#X msg 181 309 0;
+#X text 86 203 MIDI note number;
+#X text 121 252 frequency;
+#X text 260 279 sync phases;
+#X obj 48 684 dac~;
+#X obj 78 600 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 74 628 dbtorms;
+#X obj 48 654 *~;
+#X text 302 462 <-- move this slider to compare;
+#X obj 683 174 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 683 196 \; pd dsp \$1;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 511 -1 400 140 1;
+#X restore 541 452 graph;
+#X obj 86 518 spectrum.mmb~ \$0-spectrum;
+#X msg 46 284 \$1 20;
+#X obj 46 140 loadbang;
+#X msg 46 166 72;
+#X obj 25 12 cnv 15 400 35 empty empty bl-tri.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 70 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 580 120 <-- See the help patch for this object for more info.
+;
+#X text 464 52 arg1 <optional>: name corresponding to an instance of
+[bl-init.mmb] with the same argument. This is only necessary if you
+want to generate harmonics above 22050 Hz (see below). Can be anything
+but 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-waveform 200 float 0;
+#X coords 0 1 199 -1 400 140 1;
+#X restore 541 276 graph;
+#N canvas 0 22 450 300 waveform 0;
+#X obj 132 78 inlet~;
+#X obj 132 209 tabwrite~ \$0-waveform;
+#X obj 199 170 metro 150;
+#X obj 199 87 loadbang;
+#X msg 199 120 1;
+#X obj 259 115 r pd;
+#X obj 259 138 route dsp;
+#X connect 0 0 1 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 5 0 6 0;
+#X connect 6 0 2 0;
+#X restore 88 556 pd waveform;
+#X obj 486 121 bl-init.mmb \$0;
+#X obj 46 363 bl-tri.mmb~;
+#X text 45 48 A bandlimited triangle wave with a sample-accurate reset.
+This gives a better triangle wave than [bl-asymtri.mmb~] \, but the
+peak is not adjustable. The highest possible harmonic is at 22050 Hz
+(Nyquist of 44.1k sample rate) \, but it will not alias at lower sample
+rates.;
+#X obj 221 278 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 161 389 expr~ if($v1<.5 \, $v1 \, 1-$v1);
+#X obj 161 415 expr~ $v1*4-1;
+#X msg 231 309 0.25;
+#X text 153 446 bl-tri;
+#X text 229 446 perfect tri;
+#X obj 828 631 bl-asymtri.mmb~;
+#X obj 828 661 bl-asymtri2.mmb~;
+#X text 547 630 See also:;
+#X text 895 695 .mmb;
+#X obj 638 631 bl-saw.mmb~;
+#X obj 638 661 bl-saw2.mmb~;
+#X obj 548 661 bl-tri2.mmb~;
+#X obj 728 631 bl-pulse.mmb~;
+#X obj 728 661 bl-pulse2.mmb~;
+#X connect 0 0 20 0;
+#X connect 0 0 2 0;
+#X connect 1 0 6 0;
+#X connect 1 0 30 0;
+#X connect 3 0 0 0;
+#X connect 4 0 14 0;
+#X connect 4 0 19 0;
+#X connect 4 0 28 0;
+#X connect 5 0 4 2;
+#X connect 6 0 33 0;
+#X connect 7 0 30 1;
+#X connect 12 0 13 0;
+#X connect 13 0 14 1;
+#X connect 14 0 11 1;
+#X connect 14 0 11 0;
+#X connect 16 0 17 0;
+#X connect 20 0 1 0;
+#X connect 21 0 22 0;
+#X connect 22 0 3 0;
+#X connect 30 0 4 0;
+#X connect 32 0 35 0;
+#X connect 32 0 7 0;
+#X connect 33 0 34 0;
+#X connect 34 0 4 1;
+#X connect 35 0 6 1;

@@ -1,0 +1,76 @@
+#N canvas 0 22 776 701 10;
+#X obj 262 433 balance.mmb~;
+#X obj 134 320 bl-saw.mmb~;
+#X obj 276 259 filtercoeff.mmb lowpass;
+#X floatatom 276 143 5 0 0 0 - - -;
+#X obj 276 165 mtof;
+#X obj 321 196 dbtorms;
+#X floatatom 321 143 5 0 0 0 - - -;
+#X obj 376 469 env~;
+#X obj 201 471 env~;
+#X obj 301 469 env~;
+#X floatatom 376 501 5 0 0 0 - - -;
+#X floatatom 301 501 5 0 0 0 - - -;
+#X floatatom 201 501 5 0 0 0 - - -;
+#X obj 321 169 + 100;
+#X obj 134 381 biquadm.mmb~;
+#X floatatom 233 213 5 0 0 0 - - -;
+#X obj 25 12 cnv 15 400 35 empty empty balance.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X obj 262 644 dac~;
+#X obj 291 561 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 288 588 dbtorms;
+#X obj 262 614 *~;
+#X floatatom 134 265 5 0 0 0 - - -;
+#X obj 134 287 mtof;
+#X floatatom 90 315 5 0 0 0 - - -;
+#X text 225 143 cutoff;
+#X obj 295 226 t b f;
+#X text 359 141 resonance;
+#X text 28 265 oscillator pitch;
+#X text 548 38 [balance.mmb~];
+#X text 571 56 no arguments;
+#X text 45 48 Adjusts the RMS level of a signal to be the same as the
+level of a reference signal.;
+#N canvas 0 22 450 300 split 0;
+#X obj 182 61 inlet~;
+#X obj 153 126 outlet~;
+#X obj 213 126 outlet~;
+#X text 108 174 just to make the patch easier to read;
+#X connect 0 0 1 0;
+#X connect 0 0 2 0;
+#X restore 331 402 pd split;
+#X text 356 309 This example adjusts the level of the filtered oscillator
+to be equal to what it was before it was filtered \, essentially acting
+as a make-up gain.;
+#X text 621 576 .mmb;
+#X connect 0 0 9 0;
+#X connect 0 0 21 0;
+#X connect 1 0 14 0;
+#X connect 1 0 32 0;
+#X connect 2 0 14 1;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 4 0 15 0;
+#X connect 5 0 26 0;
+#X connect 6 0 13 0;
+#X connect 7 0 10 0;
+#X connect 8 0 12 0;
+#X connect 9 0 11 0;
+#X connect 13 0 5 0;
+#X connect 14 0 0 0;
+#X connect 14 0 8 0;
+#X connect 19 0 20 0;
+#X connect 20 0 21 1;
+#X connect 21 0 18 1;
+#X connect 21 0 18 0;
+#X connect 22 0 23 0;
+#X connect 23 0 24 0;
+#X connect 23 0 1 0;
+#X connect 26 0 2 0;
+#X connect 26 1 2 1;
+#X connect 32 0 0 1;
+#X connect 32 1 7 0;

@@ -1,0 +1,110 @@
+#N canvas 91 22 1077 771 10;
+#X obj 85 262 mtof;
+#X floatatom 85 239 5 0 0 0 - - -;
+#X text 125 240 MIDI note number;
+#X obj 48 724 dac~;
+#X obj 78 640 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 74 668 dbtorms;
+#X obj 48 694 *~;
+#X obj 683 174 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 683 196 \; pd dsp \$1;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 511 -1 400 140 1;
+#X restore 541 452 graph;
+#X obj 86 558 spectrum.mmb~ \$0-spectrum;
+#X obj 85 177 loadbang;
+#X msg 85 203 72;
+#X obj 25 12 cnv 15 400 35 empty empty bl-asymtri2.mmb~ 20 12 0 14
+-4160 -203904 0;
+#X obj 25 48 cnv 15 400 110 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 580 120 <-- See the help patch for this object for more info.
+;
+#X text 464 52 arg1 <optional>: name corresponding to an instance of
+[bl-init.mmb] with the same argument. This is only necessary if you
+want to generate harmonics above 22050 Hz (see below). Can be anything
+but 0;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-waveform 200 float 0;
+#X coords 0 1 199 -1 400 140 1;
+#X restore 541 276 graph;
+#N canvas 0 22 450 300 waveform 0;
+#X obj 132 78 inlet~;
+#X obj 132 209 tabwrite~ \$0-waveform;
+#X obj 199 170 metro 150;
+#X obj 199 87 loadbang;
+#X msg 199 120 1;
+#X obj 259 115 r pd;
+#X obj 259 138 route dsp;
+#X connect 0 0 1 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 5 0 6 0;
+#X connect 6 0 2 0;
+#X restore 88 596 pd waveform;
+#X obj 486 121 bl-init.mmb \$0;
+#X obj 87 342 phasor~;
+#X obj 161 436 wrap~;
+#X obj 161 413 +~;
+#X text 257 350 phase offset;
+#X obj 249 367 hsl 128 15 0 1 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 6350 1;
+#X obj 182 334 * 1;
+#X obj 182 306 t b f;
+#X floatatom 182 359 5 0 0 0 - - -;
+#X obj 185 282 hsl 128 15 0 2 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 6350 1;
+#X text 176 265 change number of harmonics;
+#X obj 46 522 expr~ .5*($v1-$v2);
+#X obj 46 483 bl-asymtri2.mmb~;
+#X obj 161 483 bl-asymtri2.mmb~;
+#X obj 235 438 sig~ 0.25;
+#X obj 306 443 sig~ 0.75;
+#X text 45 48 This is variant of [bl-asymtri.mmb~] that can be driven
+by an external [phasor~] to allow phase synchronization of oscillators.
+Phase goes in the left inlet \, frequency in the middle \, and pulse
+width in the right. If the frequency of the [phasor~] is different
+from that going into [bl-asymtri2.mmb~] \, you can control the number
+of harmonics \, forcing aliasing or limiting harmonics well below Nyquist.
+;
+#X text 547 630 See also:;
+#X text 895 695 .mmb;
+#X obj 658 631 bl-saw.mmb~;
+#X obj 658 661 bl-saw2.mmb~;
+#X obj 748 631 bl-pulse.mmb~;
+#X obj 748 661 bl-pulse2.mmb~;
+#X obj 848 631 bl-tri.mmb~;
+#X obj 848 661 bl-tri2.mmb~;
+#X obj 548 661 bl-asymtri.mmb~;
+#X connect 0 0 20 0;
+#X connect 0 0 25 0;
+#X connect 1 0 0 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 1;
+#X connect 6 0 3 1;
+#X connect 6 0 3 0;
+#X connect 7 0 8 0;
+#X connect 11 0 12 0;
+#X connect 12 0 1 0;
+#X connect 20 0 22 0;
+#X connect 20 0 31 0;
+#X connect 21 0 32 0;
+#X connect 22 0 21 0;
+#X connect 24 0 22 1;
+#X connect 25 0 27 0;
+#X connect 26 0 25 0;
+#X connect 26 1 25 1;
+#X connect 27 0 31 1;
+#X connect 27 0 32 1;
+#X connect 28 0 26 0;
+#X connect 30 0 10 0;
+#X connect 30 0 18 0;
+#X connect 30 0 6 0;
+#X connect 31 0 30 0;
+#X connect 32 0 30 1;
+#X connect 33 0 31 2;
+#X connect 34 0 32 2;

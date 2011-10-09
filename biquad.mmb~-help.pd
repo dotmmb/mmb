@@ -1,0 +1,60 @@
+#N canvas 52 69 854 534 10;
+#X obj 25 12 cnv 15 400 35 empty empty biquad.mmb~ 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 40 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X obj 76 340 noise~;
+#X obj 148 196 hsl 128 15 0 22000 0 0 empty empty empty -2 -8 0 10
+-262144 -1 -1 7373 1;
+#X text 170 194 frequency;
+#X floatatom 293 196 5 0 0 0 - - -;
+#X obj 293 218 + 100;
+#X obj 293 242 dbtorms;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 512 0 400 140 1;
+#X restore 411 223 graph;
+#X obj 76 453 spectrum.mmb~ \$0-spectrum;
+#X text 729 410 .mmb;
+#X text 332 195 Q;
+#X obj 145 137 loadbang;
+#X msg 293 167 10;
+#X msg 145 163 10000;
+#X obj 225 269 t b f;
+#X text 45 48 A biquad filter that accepts coefficients at the audio
+rate.;
+#X obj 145 311 filtercoeff.mmb~ notch;
+#X text 339 410 See also:;
+#X obj 342 438 biquadm.mmb~;
+#X obj 342 464 biquad~;
+#X obj 432 438 filtercoeff.mmb;
+#X obj 432 464 filtercoeff.mmb~;
+#X obj 542 438 lop.mmb~;
+#X obj 542 464 hip.mmb~;
+#X obj 602 464 multimode.mmb~;
+#X obj 602 438 multimode.mmb;
+#X obj 702 438 filterplot.mmb;
+#X obj 473 71 fexpr~ $x4*$x1 + $x5*$x1[-1] + $x6*$x1[-2] + $x2*$y[-1]
++ $x3*$y[-2];
+#X obj 76 391 biquad.mmb~;
+#X text 469 48 Alternatively \, you could just use [fexpr~] like this:
+;
+#X text 469 107 I haven't bothered to find out if it's more efficient.
+;
+#X connect 2 0 29 0;
+#X connect 3 0 17 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 15 0;
+#X connect 12 0 14 0;
+#X connect 12 0 13 0;
+#X connect 13 0 5 0;
+#X connect 14 0 3 0;
+#X connect 15 0 17 0;
+#X connect 15 1 17 1;
+#X connect 17 0 29 1;
+#X connect 17 1 29 2;
+#X connect 17 2 29 3;
+#X connect 17 3 29 4;
+#X connect 17 4 29 5;
+#X connect 29 0 9 0;

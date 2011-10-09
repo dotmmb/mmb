@@ -1,0 +1,88 @@
+#N canvas 61 22 1169 774 10;
+#X obj 25 12 cnv 15 400 35 empty empty multimode.mmb 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X obj 39 196 hsl 128 15 0 136 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 5976 1;
+#X text 71 179 frequency;
+#X obj 193 247 + 100;
+#X obj 193 271 dbtorms;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 512 0 400 140 1;
+#X restore 638 424 graph;
+#X text 1046 614 .mmb;
+#X text 656 614 See also:;
+#X obj 919 642 biquadm.mmb~;
+#X obj 919 668 biquad~;
+#X obj 859 642 lop.mmb~;
+#X obj 859 668 hip.mmb~;
+#X obj 651 642 multimode.mmb~;
+#X obj 1019 642 filterplot.mmb;
+#X floatatom 193 300 5 0 0 0 - - -;
+#X text 257 211 The gain of the resonance is equal to Q. By convention
+\, -3dB means no resonance for lowpass and highpass.;
+#X obj 193 218 nbx 5 14 -1e+37 1e+37 0 1 empty empty empty 0 -8 0 10
+-262144 -1 -1 -3 256;
+#X obj 76 615 *~ 0.2;
+#X obj 76 645 dac~;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-filter.response 400 float 0;
+#X coords 0 1 399 -1 400 140 1;
+#X restore 638 243 graph;
+#X obj 250 488 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X text 269 487 plot phase response;
+#X obj 133 617 spectrum.mmb~ \$0-spectrum;
+#X msg 300 616 logfreq 1 \, dbrange -25 25;
+#X obj 749 668 filtercoeff.mmb~;
+#X obj 70 237 mtof;
+#X floatatom 104 291 0 0 0 0 - - -;
+#X obj 128 588 *~ 39;
+#X obj 300 586 loadbang;
+#X obj 76 420 noise~;
+#X obj 76 471 biquadm.mmb~;
+#X obj 156 538 filterplot.mmb \$0-filter.response;
+#X msg 250 507 phase \$1;
+#X obj 184 368 t b f;
+#X obj 749 642 filtercoeff.mmb;
+#X text 45 48 Generates a list of biquad coefficients for a filter
+that smoothly morphs between lowpass \, resonant bandpass \, and highpass.
+;
+#X text 471 49 [multimode.mmb];
+#X text 499 65 no arguments;
+#X obj 152 407 multimode.mmb;
+#X text 235 300 Q;
+#X obj 270 339 hsl 128 15 0 1 0 1 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X text 265 321 Mode: 0 = lowpass \, 0.5 = resonant bandpass \, 1 =
+highpass;
+#X floatatom 281 369 5 0 0 0 - - -;
+#X obj 237 368 t b f;
+#X obj 1019 668 biquad.mmb~;
+#X connect 2 0 26 0;
+#X connect 4 0 5 0;
+#X connect 5 0 15 0;
+#X connect 15 0 34 0;
+#X connect 17 0 4 0;
+#X connect 18 0 19 0;
+#X connect 18 0 19 1;
+#X connect 21 0 33 0;
+#X connect 24 0 23 1;
+#X connect 26 0 27 0;
+#X connect 27 0 39 0;
+#X connect 28 0 23 0;
+#X connect 29 0 24 0;
+#X connect 30 0 31 0;
+#X connect 31 0 18 0;
+#X connect 31 0 28 0;
+#X connect 33 0 32 1;
+#X connect 34 0 39 0;
+#X connect 34 1 39 1;
+#X connect 39 0 31 1;
+#X connect 39 0 32 0;
+#X connect 41 0 43 0;
+#X connect 41 0 44 0;
+#X connect 44 0 39 0;
+#X connect 44 1 39 2;

@@ -1,0 +1,55 @@
+#N canvas 343 22 1097 685 10;
+#X obj 25 12 cnv 15 400 35 empty empty bl-init.mmb 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 70 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X msg 492 143 48000;
+#X obj 492 205 bl-init.mmb \$0;
+#X text 45 48 This object contains the wavetables used by the [bl-*.mmb~]
+family of bandlimited oscillators. YOU ARE NOT REQUIRED TO CREATE IT.
+;
+#X text 464 52 arg1 <optional>: An ID that other [bl-*.mmb~] objects
+with the same argument use to know which [bl-init.mmb] to read from.
+Can be anything but 0;
+#X obj 493 408 bl-saw.mmb~ \$0;
+#X floatatom 493 345 5 0 0 0 - - -;
+#X obj 493 367 mtof;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 512 0 400 100 1;
+#X restore 656 327 graph;
+#X obj 493 451 spectrum.mmb~ \$0-spectrum;
+#X text 534 138 <-- click this to regenerate the tables for a max sample
+rate of 48000 Hz. THIS WILL TAKE A FEW MINUTES \, SO BE PATIENT. You
+will see a message in the Pd window when it is done.;
+#X text 671 438 Change the sample rate and restart dsp to see that
+there is never aliasing below Nyquist of the sample rate \, but harmonics
+will not extend past Nyquist of the sample rate given to [bl-init.mmb]
+;
+#X msg 493 314 72;
+#X obj 493 282 loadbang;
+#X text 45 165 [bl-init.mmb] is an abstraction that contains precalculated
+wavetables that are used by the [bl-*.mmb~] family of bandlimited oscillators.
+It does not have to be explicity created \, however \, because all
+the [bl-*.mmb~] oscillators check to see if there is an instance of
+it on creation. If there isn't one \, then the oscillator will internally
+dynamically patch one in. However \, if you delete the oscillator that
+patched it in \, other [bl-*.mmb~] oscillators will stop producing
+sound until you restart DSP. So \, if you're doing any live coding
+or dynamic patching with these oscillators \, it might be a good idea
+to explicitly create [bl-init.mmb] first (with no argument).;
+#X text 44 364 The only time it is absolutely necessary to create this
+object yourself is if you are working in a sample rate above 44100
+Hz \, and you want the highest harmonic to extend past 22050 Hz (you
+might not want this \, even at a higher samplerate). In this case \,
+you can send a samplerate to [bl-init.mmb] \, and it will regenerate
+the wavetables after a few minutes. NOTE: if you are working at a lower
+sample rate \, you don't need to do this! The oscillators will not
+generate harmonics above the Nyquist frequency (1/2 sample rate) of
+whatever sample rate you are working with.;
+#X connect 2 0 3 0;
+#X connect 6 0 10 0;
+#X connect 7 0 8 0;
+#X connect 8 0 6 0;
+#X connect 13 0 7 0;
+#X connect 14 0 13 0;

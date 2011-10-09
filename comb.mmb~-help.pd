@@ -1,0 +1,75 @@
+#N canvas 42 22 1017 815 10;
+#X obj 233 530 comb.mmb~ 40;
+#X obj 228 706 dac~;
+#X obj 728 120 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 727 149 \; pd dsp \$1;
+#X obj 243 248 line~;
+#X msg 243 223 \$1 30;
+#X obj 243 168 * 0.01;
+#X floatatom 243 144 5 0 0 0 - - -;
+#X floatatom 406 444 5 0 0 0 - - -;
+#X obj 232 667 *~ 0.2;
+#X obj 406 471 * 0.01;
+#X obj 25 12 cnv 15 400 35 empty empty comb.mmb~ 20 12 0 14 -4160 -203904
+0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 45 48 Vanilla version of a comb filter. Probably more cpu intensive
+than [cyclone/comb~].;
+#X text 477 46 [comb.mmb~ maxdelay];
+#X text 494 64 arg1 <required>: maximum delay length of the filter
+;
+#X obj 147 456 noise~;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array \$0-spectrum 512 float 0;
+#X coords 0 1 512 0 400 140 1;
+#X restore 522 567 graph;
+#X floatatom 243 195 5 0 0 0 - - -;
+#X floatatom 406 500 5 0 0 0 - - -;
+#X floatatom 326 271 5 0 0 0 - - -;
+#X obj 326 298 * 0.01;
+#X floatatom 326 327 5 0 0 0 - - -;
+#X floatatom 369 359 5 0 0 0 - - -;
+#X obj 369 386 * 0.01;
+#X floatatom 369 415 5 0 0 0 - - -;
+#X text 361 327 input (dry) amount;
+#X text 283 193 delay length in ms. Shorter delays result in farther
+spaced notches.;
+#X text 407 416 feedforward amount (notch depth);
+#X text 444 493 feedback amount (resonance). NOTE: if this goes outside
+the range of -1 to 1 \, the filter can explode and may damage your
+speakers!;
+#X obj 229 392 +~;
+#X obj 230 440 max~ 0;
+#X obj 167 338 *~ 0;
+#X floatatom 188 245 5 0 0 0 - - -;
+#X text 24 245 increase for flanging! -->;
+#X obj 167 283 osc~ 0.2;
+#X text 806 737 .mmb;
+#X obj 254 584 spectrum.mmb~ \$0-spectrum;
+#X connect 0 0 9 0;
+#X connect 0 0 37 0;
+#X connect 2 0 3 0;
+#X connect 4 0 30 1;
+#X connect 5 0 4 0;
+#X connect 6 0 18 0;
+#X connect 7 0 6 0;
+#X connect 8 0 10 0;
+#X connect 9 0 1 0;
+#X connect 9 0 1 1;
+#X connect 10 0 19 0;
+#X connect 16 0 0 0;
+#X connect 18 0 5 0;
+#X connect 19 0 0 4;
+#X connect 20 0 21 0;
+#X connect 21 0 22 0;
+#X connect 22 0 0 2;
+#X connect 23 0 24 0;
+#X connect 24 0 25 0;
+#X connect 25 0 0 3;
+#X connect 30 0 31 0;
+#X connect 31 0 0 1;
+#X connect 32 0 30 0;
+#X connect 33 0 32 1;
+#X connect 35 0 32 0;

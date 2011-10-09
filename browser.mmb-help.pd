@@ -1,0 +1,165 @@
+#N canvas 137 22 943 792 10;
+#X msg 221 687 folder \$1;
+#X obj 339 747 print;
+#X msg 275 276 dump;
+#X obj 221 632 route folder;
+#X obj 221 661 symbol;
+#N canvas 620 49 623 657 colors 0;
+#N canvas 0 22 542 322 dropdown 0;
+#X obj 101 102 popup 124 25 #ffffff --- bgcolor1 bgcolor2 textcolor
+hlcolor hltextcolor scrollbgcolor scrollhandlecolor dirbgcolor dirtextcolor
+;
+#X obj 101 140 route bang;
+#X msg 55 108 0;
+#X obj 216 163 outlet;
+#X msg 101 37 options bgcolor1 bgcolor2 textcolor hlcolor hltextcolor
+scrollbgcolor scrollhandlecolor dirbgcolor dirtextcolor;
+#X msg 264 73 name ---;
+#X connect 0 0 1 0;
+#X connect 0 1 3 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 0 0;
+#X coords 0 -1 1 1 125 29 2 100 100;
+#X restore 295 81 pd dropdown;
+#N canvas 0 22 483 390 rgb 0;
+#X obj 40 256 rgb2pd.mmb;
+#X floatatom 105 105 5 0 255 1 red - -;
+#X floatatom 105 125 5 0 255 1 green - -;
+#X floatatom 105 145 5 0 255 1 blue - -;
+#X obj 98 203 t b f;
+#X obj 57 185 t b f;
+#X obj 47 299 outlet;
+#X connect 0 0 6 0;
+#X connect 1 0 0 0;
+#X connect 2 0 5 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 0;
+#X connect 4 1 0 2;
+#X connect 5 0 0 0;
+#X connect 5 1 0 1;
+#X coords 0 -1 1 1 75 65 2 100 100;
+#X restore 75 56 pd rgb;
+#X floatatom 192 58 5 0 255 1 red - -;
+#X floatatom 192 78 5 0 255 1 green - -;
+#X floatatom 192 98 5 0 255 1 blue - -;
+#X obj 175 158 t b f;
+#X obj 213 158 t b f;
+#X obj 159 278 list prepend;
+#X obj 161 191 pack f f f;
+#X text 428 86 color messages;
+#X text 89 17 accepts single color value or list of separate rbg values
+;
+#X obj 159 307 list prepend set;
+#X obj 159 328 list trim;
+#X msg 159 394 dirtextcolor 0 0 0;
+#X obj 159 351 t b a;
+#X floatatom 39 149 5 0 0 0 - - -;
+#X obj 328 531 outlet;
+#N canvas 0 22 598 398 color.schemes 0;
+#X msg 88 152 bgcolor1 240 240 255 \, bgcolor2 255 255 255 \, textcolor
+0 0 0 \, hlcolor 100 130 255 \, hltextcolor 255 255 255 \, scrollbgcolor
+230 230 230 \, scrollhandlecolor 100 100 220 \, dirbgcolor 230 230
+185 \, dirtextcolor 0 0 0;
+#X obj 88 44 inlet;
+#X obj 88 345 outlet;
+#X obj 88 73 list trim;
+#X msg 131 215 bgcolor1 22 \, bgcolor2 22 \, textcolor 16 \, hlcolor
+16 \, hltextcolor 22 \, scrollbgcolor 26 \, scrollhandlecolor 16 \,
+dirbgcolor 26 \, dirtextcolor 16;
+#X obj 88 96 route iTunes default;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 3 0 5 0;
+#X connect 4 0 2 0;
+#X connect 5 0 0 0;
+#X connect 5 1 4 0;
+#X restore 372 282 pd color.schemes;
+#N canvas 0 22 542 322 dropdown 0;
+#X obj 101 102 popup 124 25 #ffffff --- default iTunes;
+#X obj 101 140 route bang;
+#X msg 55 108 0;
+#X obj 216 163 outlet;
+#X msg 264 73 name ---;
+#X msg 101 37 options default iTunes;
+#X connect 0 0 1 0;
+#X connect 0 1 3 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 0 0;
+#X coords 0 -1 1 1 125 29 2 100 100;
+#X restore 372 230 pd dropdown;
+#X connect 0 0 7 1;
+#X connect 1 0 7 0;
+#X connect 2 0 8 0;
+#X connect 3 0 5 0;
+#X connect 4 0 6 0;
+#X connect 5 0 8 0;
+#X connect 5 1 8 1;
+#X connect 6 0 8 0;
+#X connect 6 1 8 2;
+#X connect 7 0 11 0;
+#X connect 8 0 7 0;
+#X connect 11 0 12 0;
+#X connect 12 0 14 0;
+#X connect 13 0 16 0;
+#X connect 14 0 13 0;
+#X connect 14 1 13 0;
+#X connect 15 0 7 0;
+#X connect 17 0 16 0;
+#X connect 18 0 17 0;
+#X restore 374 373 pd colors;
+#X obj 268 478 browser.mmb;
+#X msg 327 333 extensions;
+#X msg 327 308 extensions aif wav pd;
+#X msg 166 157 folder /;
+#X obj 25 12 cnv 15 400 35 empty empty browser.mmb 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 50 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 45 48 A GUI file browser.;
+#X text 460 306 filter by list of extensions;
+#X text 312 275 dump contents of folder out the left outlet;
+#X msg 196 192 folder ~/;
+#X text 148 115 The folder message will show the contents of the specified
+folder. Directories MUST end in a forward slash.;
+#X text 223 155 jump to root;
+#X text 259 192 jump to home folder;
+#X text 459 41 This has only been tested on OSX. I don't know if it
+will work on other OS's.;
+#X msg 230 232 folder ~/Desktop/;
+#X text 32 495 ".." outputs the next directory up -->;
+#X text 71 621 Simple way to get it to;
+#X text 6 665 For some reason this is needed. -->;
+#X text 71 635 interact with mouse.;
+#X text 434 373 colors are customizable;
+#X text 755 663 .mmb;
+#X msg 399 408 receive browser1.r;
+#X text 515 406 set receive name for inlet;
+#X msg 405 440 send browser1 browser2;
+#X text 547 438 set send name for outlets;
+#X text 470 476 <-- current directory;
+#X text 493 525 Clicking on a folder outputs the absolute path prepended
+by the word "folder" from the left outlet. Likewise \, clicking on
+a file sends the filename (with path) prepended by the word "file"
+from the left outlet. The [dump( messages will send all files and folders
+out the right outlet.;
+#X text 400 333 don't filter by extension;
+#X connect 0 0 1 0;
+#X connect 0 0 6 0;
+#X connect 2 0 6 0;
+#X connect 3 0 4 0;
+#X connect 3 1 1 0;
+#X connect 4 0 0 0;
+#X connect 5 0 6 0;
+#X connect 6 0 3 0;
+#X connect 6 1 1 0;
+#X connect 7 0 6 0;
+#X connect 8 0 6 0;
+#X connect 9 0 6 0;
+#X connect 15 0 6 0;
+#X connect 20 0 6 0;
+#X connect 27 0 6 0;
+#X connect 29 0 6 0;
