@@ -5,7 +5,7 @@
 0;
 #X obj 76 340 noise~;
 #X obj 148 196 hsl 128 15 0 22000 0 0 empty empty empty -2 -8 0 10
--262144 -1 -1 7373 1;
+-262144 -1 -1 5773 1;
 #X text 170 194 frequency;
 #X floatatom 293 196 5 0 0 0 - - -;
 #X obj 293 218 + 100;
@@ -20,7 +20,6 @@
 #X obj 145 137 loadbang;
 #X msg 293 167 10;
 #X msg 145 163 10000;
-#X obj 225 269 t b f;
 #X text 45 48 A biquad filter that accepts coefficients at the audio
 rate.;
 #X obj 145 311 filtercoeff.mmb~ notch;
@@ -41,20 +40,18 @@ rate.;
 ;
 #X text 469 107 I haven't bothered to find out if it's more efficient.
 ;
-#X connect 2 0 29 0;
-#X connect 3 0 17 0;
+#X connect 2 0 28 0;
+#X connect 3 0 16 0;
 #X connect 5 0 6 0;
 #X connect 6 0 7 0;
-#X connect 7 0 15 0;
+#X connect 7 0 16 1;
 #X connect 12 0 14 0;
 #X connect 12 0 13 0;
 #X connect 13 0 5 0;
 #X connect 14 0 3 0;
-#X connect 15 0 17 0;
-#X connect 15 1 17 1;
-#X connect 17 0 29 1;
-#X connect 17 1 29 2;
-#X connect 17 2 29 3;
-#X connect 17 3 29 4;
-#X connect 17 4 29 5;
-#X connect 29 0 9 0;
+#X connect 16 0 28 1;
+#X connect 16 1 28 2;
+#X connect 16 2 28 3;
+#X connect 16 3 28 4;
+#X connect 16 4 28 5;
+#X connect 28 0 9 0;
