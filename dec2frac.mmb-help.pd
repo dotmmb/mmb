@@ -1,0 +1,43 @@
+#N canvas 431 22 944 500 10;
+#X obj 25 12 cnv 15 400 35 empty empty dec2frac.mmb 20 12 0 14 -4160
+-203904 0;
+#X obj 25 48 cnv 15 400 70 empty empty empty 20 12 0 14 -203904 -66577
+0;
+#X text 812 417 .mmb;
+#X text 45 48 Converts a decimal number into its fractional form. The
+accuracy is determined by the argument. Irrational numbers \, such
+as pi \, don't have fractional representations. So you should make
+the argument high enough for as accurate an approximation that suits
+you.;
+#X text 468 49 [dec2frac.mmb max_denominator];
+#X msg 71 172 3.14159;
+#X msg 136 199 3.75;
+#X msg 149 245 -0.625;
+#X obj 113 338 unpack f f;
+#X floatatom 113 364 0 0 0 0 - - -;
+#X floatatom 170 384 0 0 0 0 - - -;
+#X obj 131 423 /;
+#X floatatom 131 450 0 0 0 0 - - -;
+#X floatatom 223 252 5 0 0 0 - - -;
+#X text 263 252 change the maximum denominator value;
+#X text 194 333 outputs a list of <numerator> <denominator>;
+#X text 487 69 arg1 <optional>: the maximum size of the denominator.
+Higher values result in more accurate estimations \, but more computation.
+Default is 1000;
+#X floatatom 48 255 0 0 0 0 - - -;
+#X obj 113 296 dec2frac.mmb 1000;
+#X text 526 305 This algorithm is based on best rational approximation
+using continued fractions. It currently does not implement rules for
+decrementing the last value of the continued fraction form \, so it
+is not as accurate as it could be.;
+#X connect 5 0 18 0;
+#X connect 6 0 18 0;
+#X connect 7 0 18 0;
+#X connect 8 0 9 0;
+#X connect 8 1 10 0;
+#X connect 9 0 11 0;
+#X connect 10 0 11 1;
+#X connect 11 0 12 0;
+#X connect 13 0 18 1;
+#X connect 17 0 18 0;
+#X connect 18 0 8 0;
