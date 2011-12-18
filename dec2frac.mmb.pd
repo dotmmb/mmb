@@ -1,4 +1,4 @@
-#N canvas 60 22 908 750 10;
+#N canvas 140 22 908 750 10;
 #X obj 298 36 inlet;
 #X obj 573 359 t l;
 #X obj 240 574 list;
@@ -68,8 +68,8 @@
 #X obj 535 469 route bang;
 #X msg 333 382 1;
 #X text 41 573 This is just here for debugging;
-#X obj 634 406 loadbang;
-#X obj 634 427 f \$1;
+#X obj 660 406 loadbang;
+#X obj 660 427 f \$1;
 #X text 612 683 .mmb;
 #X text 638 625 TODO: implement decrementing rules;
 #X obj 102 674 prepend set;
@@ -103,8 +103,8 @@
 #X restore 298 76 pd test.if.integer;
 #X obj 403 111 s \$0-to.outlet;
 #X obj 395 671 r \$0-to.outlet;
-#X msg 101 698;
-#X obj 634 452 max 1;
+#X msg 101 698 45 27 1 15 7 3;
+#X obj 660 452 max 1;
 #X obj 306 157 until;
 #X obj 335 134 r \$0-stop.until;
 #X obj 306 183 f;
@@ -143,7 +143,7 @@
 #X connect 24 0 11 0;
 #X connect 24 1 5 0;
 #X connect 26 0 27 0;
-#X connect 27 0 10 1;
+#X connect 27 0 28 1;
 #X connect 28 0 10 0;
 #X connect 29 0 2 0;
 #X connect 29 1 35 0;
